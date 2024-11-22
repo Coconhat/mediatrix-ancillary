@@ -21,7 +21,7 @@ export default function Card({ type }) {
   const cardData = dataMap[type] || { title: "Unknown", value: "-" };
 
   return (
-    <div className="rounded-2xl odd:bg-[#F3D3B5] even:bg-blue-500 p-4 flex-1 min-w-[130px]">
+    <div className="rounded-2xl odd:bg-[#F3D3B5] even:bg-[#B5D3F3] p-4 flex-1 min-w-[130px]">
       <div className="flex justify-between items-center">
         <span className="text-[10px] bg-white px-2 py-1 rounded-full text-green-600">
           {new Date().toLocaleDateString()}

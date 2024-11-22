@@ -19,3 +19,13 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+.react-calendar {
+  width: 100% !important;
+  border: none !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+
+.react-calendar__tile--active {
+  background-color: #b5d3f3 !important;
+  color: #0a0a0a !important;
+}
