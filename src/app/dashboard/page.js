@@ -6,6 +6,7 @@ import ServiceEfficiencyChart from "../components/Chart2";
 import Chart2 from "../components/Chart2";
 import FinanceChart from "../components/FinanceChart";
 import Calendar from "../components/EventCalendar";
+import Announcement from "../components/Announcement";
 
 export default function page() {
   return (
@@ -38,6 +39,7 @@ export default function page() {
           </div>
           <div className="w-full lg:w-1/3 flex flex-col gap-8">
             <Calendar />
+            <Announcement />
           </div>
         </div>
       </div>
