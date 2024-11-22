@@ -21,6 +21,11 @@ const Navbar = () => {
               About
             </Link>
           </li>
+          <li>
+            <Link href="/dashboard" className="hover:text-blue-800">
+              Dashboard
+            </Link>
+          </li>
         </ul>
         <ul className="ml-6 mr-9 flex items-center hover:text-blue-800">
           <i className="fa-regular fa-heart text-gray-700  mr-2"></i>
