@@ -4,7 +4,9 @@ const Navbar = () => {
   return (
     <nav className="text-gray-700 p-4 font-semibold">
       <div className="flex justify-between items-center pb-5">
-        <h1 className="text-xl font-bold px-4">Mediatrix</h1>
+        <Link href="/">
+          <h1 className="text-xl font-bold px-4">Mediatrix</h1>
+        </Link>
         <ul className="flex space-x-6 mx-auto font-semibold">
           <li>
             <Link href="/" className="hover:text-blue-800">
