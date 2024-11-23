@@ -1,10 +1,10 @@
 import Link from "next/link";
-import Card from "../components/Card";
-import ServiceRequestChart from "../components/ServiceRequestChart";
-import Chart2 from "../components/Chart2";
-import FinanceChart from "../components/FinanceChart";
-import Calendar from "../components/EventCalendar";
-import Announcement from "../components/Announcement";
+import Card from "../../components/Card";
+import ServiceRequestChart from "../../components/ServiceRequestChart";
+import Chart2 from "../../components/Chart2";
+import FinanceChart from "../../components/FinanceChart";
+import Calendar from "../../components/EventCalendar";
+import Announcement from "../../components/Announcement";
 
 export const metadata = {
   title: "Dashboard", 
