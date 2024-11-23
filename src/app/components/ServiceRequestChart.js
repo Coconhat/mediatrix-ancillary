@@ -37,8 +37,9 @@ const data = [
 export default function ServiceRequestChart() {
   return (
     <div className="bg-white rounded-xl w-full h-full p-4">
-      <div className="mb-2">
+      <div className="mb-2 justify-between flex items-center">
         <h2 className="text-lg font-semibold">Ancillary Service Requests</h2>
+        <button className="text-xl">...</button>
       </div>
       <div className="w-full h-[75%]">
         <ResponsiveContainer>

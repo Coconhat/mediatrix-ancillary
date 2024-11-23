@@ -11,6 +11,12 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+const numberFormatter = new Intl.NumberFormat("en-PH", {
+  style: "currency",
+  currency: "PHP",
+  maximumFractionDigits: 2,
+});
+
 const data = [
   { name: "Jan", revenue: 40000, expense: 24900, profit: 16070 },
   { name: "Feb", revenue: 45200, expense: 25200, profit: 20200 },
@@ -47,9 +53,12 @@ export default function FinanceChart() {
 
             <XAxis dataKey="name" tick={{ fontSize: 12, fontWeight: "600" }} />
 
-            <YAxis tick={{ fontSize: 12 }} />
+            <YAxis
+              tickFormatter={numberFormatter.format}
+              tick={{ fontSize: 12 }}
+            />
 
-            <Tooltip />
+            <Tooltip formatter={(value) => numberFormatter.format(value)} />
 
             <Legend
               wrapperStyle={{
