@@ -9,7 +9,7 @@ export default function Announcement() {
       <div className="flex flex-col gap-4 mt-1">
         <div className="bg-[#F3D3B5]/50 p-4 rounded-md">
           <div className="flex items-center justify-between mb-2">
-            <h2 className="font-medium">Lorem ipsum dolor sit</h2>
+            <h2 className="font-semibold">Lorem ipsum dolor sit</h2>
             <span className="text-xs text-gray-400 bg-white rounded-md px-2 py-1">
               11-22-2024
             </span>
@@ -22,7 +22,7 @@ export default function Announcement() {
 
         <div className="bg-[#B5D3F3]/70 p-4 rounded-md">
           <div className="flex items-center justify-between mb-2">
-            <h2 className="font-medium">Lorem ipsum dolor sit</h2>
+            <h2 className="font-semibold">Lorem ipsum dolor sit</h2>
             <span className="text-xs text-gray-400 bg-white rounded-md px-2 py-1">
               11-22-2024
             </span>
@@ -35,7 +35,7 @@ export default function Announcement() {
 
         <div className="bg-[#F3D3B5]/50 p-4 rounded-md">
           <div className="flex items-center justify-between mb-2">
-            <h2 className="font-medium">Lorem ipsum dolor sit</h2>
+            <h2 className="font-semibold">Lorem ipsum dolor sit</h2>
             <span className="text-xs text-gray-400 bg-white rounded-md px-2 py-1">
               11-22-2024
             </span>
@@ -46,10 +46,9 @@ export default function Announcement() {
           </p>
         </div>
 
-        {/* Announcement Item 4 */}
         <div className="bg-[#B5D3F3]/70  p-4 rounded-md">
           <div className="flex items-center justify-between mb-2">
-            <h2 className="font-medium">Lorem ipsum dolor sit</h2>
+            <h2 className="font-semibold">Lorem ipsum dolor sit</h2>
             <span className="text-xs text-gray-400 bg-white rounded-md px-2 py-1">
               11-22-2024
             </span>
