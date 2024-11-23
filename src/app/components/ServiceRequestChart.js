@@ -51,21 +51,37 @@ export default function ServiceRequestChart() {
             data={data}
           >
             <Tooltip
-              formatter={(value, name, props) => {
-                const serviceData = data.find((item) => item.name === name);
-                return serviceData ? [value, serviceData.name] : [value, name];
+              content={({ payload }) => {
+                if (payload && payload.length) {
+                  const { name, count } = payload[0].payload;
+                  return (
+                    <div
+                      style={{
+                        backgroundColor: "#fff",
+                        border: "1px solid #ccc",
+                        borderRadius: "5px",
+                        padding: "10px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      <p>{`Service: ${name}`}</p>
+                      <p>{`Count: ${count}`}</p>
+                    </div>
+                  );
+                }
+                return null;
               }}
             />
             <RadialBar background dataKey="count" />
+
             <Legend
-              iconSize={10}
+              iconSize={12}
               layout="horizontal"
               verticalAlign="bottom"
               align="center"
               wrapperStyle={{
                 paddingTop: 20,
                 fontSize: 12,
-                color: "#666",
               }}
             />
           </RadialBarChart>

@@ -12,78 +12,18 @@ import {
 } from "recharts";
 
 const data = [
-  {
-    name: "January",
-    revenue: 40000,
-    expense: 24900,
-    profit: 16070,
-  },
-  {
-    name: "February",
-    revenue: 45200,
-    expense: 25200,
-    profit: 20200,
-  },
-  {
-    name: "March",
-    revenue: 50300,
-    expense: 28300,
-    profit: 22300,
-  },
-  {
-    name: "April",
-    revenue: 55400,
-    expense: 29400,
-    profit: 26400,
-  },
-  {
-    name: "May",
-    revenue: 60400,
-    expense: 31400,
-    profit: 29400,
-  },
-  {
-    name: "June",
-    revenue: 65400,
-    expense: 34200,
-    profit: 33040,
-  },
-  {
-    name: "July",
-    revenue: 68400,
-    expense: 34300,
-    profit: 35400,
-  },
-  {
-    name: "August",
-    revenue: 74100,
-    expense: 34400,
-    profit: 37400,
-  },
-  {
-    name: "September",
-    revenue: 74400,
-    expense: 35400,
-    profit: 39400,
-  },
-  {
-    name: "October",
-    revenue: 77400,
-    expense: 36400,
-    profit: 41400,
-  },
-  {
-    name: "November",
-    revenue: 80500,
-    expense: 37500,
-    profit: 43500,
-  },
-  {
-    name: "December",
-    revenue: 85500,
-    expense: 35800,
-    profit: 47050,
-  },
+  { name: "Jan", revenue: 40000, expense: 24900, profit: 16070 },
+  { name: "Feb", revenue: 45200, expense: 25200, profit: 20200 },
+  { name: "Mar", revenue: 50300, expense: 28300, profit: 22300 },
+  { name: "Apr", revenue: 55400, expense: 29400, profit: 26400 },
+  { name: "May", revenue: 60400, expense: 31400, profit: 29400 },
+  { name: "Jun", revenue: 65400, expense: 34200, profit: 33040 },
+  { name: "Jul", revenue: 68400, expense: 34300, profit: 35400 },
+  { name: "Aug", revenue: 74100, expense: 34400, profit: 37400 },
+  { name: "Sep", revenue: 74400, expense: 35400, profit: 39400 },
+  { name: "Oct", revenue: 77400, expense: 36400, profit: 41400 },
+  { name: "Nov", revenue: 80500, expense: 37500, profit: 43500 },
+  { name: "Dec", revenue: 85500, expense: 35800, profit: 47050 },
 ];
 
 export default function FinanceChart() {
@@ -105,9 +45,9 @@ export default function FinanceChart() {
           >
             <CartesianGrid strokeDasharray="3 3" />
 
-            <XAxis dataKey="name" tick={{ fill: "#666", fontSize: 12 }} />
+            <XAxis dataKey="name" tick={{ fontSize: 12, fontWeight: "600" }} />
 
-            <YAxis tick={{ fill: "#666", fontSize: 12 }} />
+            <YAxis tick={{ fontSize: 12 }} />
 
             <Tooltip />
 
@@ -115,7 +55,6 @@ export default function FinanceChart() {
               wrapperStyle={{
                 paddingTop: 10,
                 fontSize: 12,
-                color: "#666",
               }}
             />
 
