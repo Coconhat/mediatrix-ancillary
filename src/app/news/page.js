@@ -6,13 +6,6 @@ import AnnouncementCard from "../components/AnnouncementCard";
 import Image from "next/image";
 
 export default function DashboardPage() {
-  const [messageSubject, setMessageSubject] = useState("");
-  const [messageBody, setMessageBody] = useState("");
-  const [recipients, setRecipients] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [showMessageForm, setShowMessageForm] = useState(false);
-  const [showUserList, setShowUserList] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
   const [selectedMemo, setSelectedMemo] = useState(null); // State for selected memo
   const [imageURL, setImageURL] = useState(""); // Initialize with an empty string or the default image URL
 
@@ -55,11 +48,11 @@ export default function DashboardPage() {
       <NavBar />
 
       {/* Dashboard Content */}
-      <div className="container mx-auto px-6 py-12 pt-32">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 pt-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Announcements Section */}
-          <div className="bg-white p-6 rounded-lg shadow-lg col-span-2">
-            <h2 className="text-xl font-bold mb-4 text-blue-800">
+          <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg md:col-span-2">
+            <h2 className="text-lg sm:text-xl font-bold mb-4 text-blue-800">
               ANCILLARY DIRECTOR ANNOUNCEMENTS
             </h2>
             <div className="space-y-4">
@@ -75,8 +68,8 @@ export default function DashboardPage() {
           </div>
 
           {/* Notifications Section */}
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-xl font-bold mb-4 text-blue-800">
+          <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg">
+            <h2 className="text-lg sm:text-xl font-bold mb-4 text-blue-800">
               Notifications
             </h2>
             <ul className="space-y-4">
@@ -100,8 +93,10 @@ export default function DashboardPage() {
           </div>
 
           {/* Memos Section */}
-          <div className="bg-white p-6 rounded-lg shadow-lg col-span-3">
-            <h2 className="text-xl font-bold mb-4 text-blue-800">Memos</h2>
+          <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg md:col-span-2 lg:col-span-3">
+            <h2 className="text-lg sm:text-xl font-bold mb-4 text-blue-800">
+              Memos
+            </h2>
             <div className="space-y-4">
               {memos.map((memo) => (
                 <div
@@ -125,8 +120,8 @@ export default function DashboardPage() {
           </div>
 
           {/* Latest News Section */}
-          <div className="bg-white p-6 rounded-lg shadow-lg col-span-3">
-            <h2 className="text-xl font-bold mb-4 text-blue-800">
+          <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg md:col-span-2 lg:col-span-3">
+            <h2 className="text-lg sm:text-xl font-bold mb-4 text-blue-800">
               LATEST NEWS
             </h2>
             <div className="space-y-4">
@@ -150,7 +145,7 @@ export default function DashboardPage() {
           onClick={closeMemoDetails} // Close popup if clicked outside
         >
           <div
-            className="bg-white p-6 rounded-lg shadow-lg max-w-2xl w-full z-60"
+            className="bg-white p-4 sm:p-6 rounded-lg shadow-lg max-w-2xl w-full mx-4 z-60"
             onClick={(e) => e.stopPropagation()} // Prevent popup closing when clicking inside
           >
             <button
@@ -160,7 +155,7 @@ export default function DashboardPage() {
               Back
             </button>
 
-            <h2 className="text-xl font-semibold mb-4 text-blue-800">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-blue-800">
               {selectedMemo.title}
             </h2>
             <p className="text-black">{selectedMemo.description}</p>
@@ -171,6 +166,8 @@ export default function DashboardPage() {
                 <Image
                   src={imageURL}
                   alt={selectedMemo.title}
+                  width={800}
+                  height={520}
                   className="w-full rounded-lg shadow-lg"
                 />
               )}

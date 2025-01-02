@@ -1,12 +1,17 @@
 import Footer from "./components/Footer";
-import Navbar from "./components/NavBar";
 import HomePage from "./sections/HomePage";
 
 const Home = () => {
   return (
-    <div>
-   
-      <HomePage />
+    <div className="min-h-screen flex flex-col">
+      {/* Add padding-top to account for the fixed Navbar */}
+      <main className="flex-grow pt-24 pb-16">
+        {" "}
+        {/* Adjust padding as needed */}
+        <HomePage />
+      </main>
+
+      {/* Footer */}
       <Footer />
     </div>
   );

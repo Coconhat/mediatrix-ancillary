@@ -8,7 +8,6 @@ const HomePage = () => {
   return (
     <div>
       <Header />
-
       {/* Sticky Scroll Sections */}
       <div className="relative">
         {/* Component1: Sticky at the top, but scrolls away when you scroll */}

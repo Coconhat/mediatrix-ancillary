@@ -1,7 +1,7 @@
 "use client"; // Marking the file as client-side
 
 import Link from "next/link";
-import { FaSearch } from "react-icons/fa"; // Importing the search icon from react-icons
+import { FaSearch, FaBars, FaTimes } from "react-icons/fa"; // Importing icons
 import { useState, useRef, useEffect } from "react";
 import useSearch from "../hooks/useSearch"; // Import the custom hook
 
@@ -24,6 +24,7 @@ const Navbar = () => {
     dashboard: 1, // Example: 1 new notification for Dashboard
     inbox: 2, // Example: 2 new notifications for Inbox
   }); // State for notifications
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Mobile menu visibility state
   const modalRef = useRef(null); // Ref for modal
   const inputRef = useRef(null); // Ref for search input
 
@@ -67,23 +68,96 @@ const Navbar = () => {
     }
   }, [searchTerm]);
 
+  // Toggle mobile menu
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
-    <nav className="bg-white text-gray-700 px-6 py-4 font-semibold shadow-md fixed top-0 left-0 w-full z-50">
+    <nav className="bg-white text-gray-700 px-4 lg:px-6 py-4 font-semibold shadow-md fixed top-0 left-0 w-full z-50">
       <div className="flex justify-between items-center h-20">
-        {/* Logo */}
-        <div className="flex items-center">
-          <h1 className="font-bold text-xl">
-            Ancillary Communication and Updates Platform
+        {/* Logo and Hamburger Menu */}
+        <div className="flex items-center space-x-4">
+          <h1 className="font-bold text-lg lg:text-xl">
+            <span className="lg:hidden">ACUP</span>{" "}
+            {/* Shortened logo for mobile */}
+            <span className="hidden lg:inline">
+              Ancillary Communication and Updates Platform
+            </span>{" "}
+            {/* Full logo for desktop */}
           </h1>
+          <button
+            onClick={toggleMobileMenu}
+            className="lg:hidden text-gray-700 focus:outline-none"
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? (
+              <FaTimes className="text-2xl" />
+            ) : (
+              <FaBars className="text-2xl" />
+            )}
+          </button>
         </div>
 
-        {/* Navigation Links */}
-        <div className="flex-1 flex justify-center">
-          <ul className="flex space-x-12">
+        {/* Desktop Navigation Links */}
+        <div className="hidden lg:flex lg:items-center lg:space-x-12">
+          <Link
+            href="/"
+            className="hover:text-blue-800 transition duration-300"
+          >
+            Home
+          </Link>
+          <Link
+            href="/dashboard"
+            className="hover:text-blue-800 transition duration-300"
+          >
+            Dashboard
+          </Link>
+          <Link
+            href="/news"
+            className="hover:text-blue-800 transition duration-300"
+          >
+            News & Announcements
+          </Link>
+          <Link
+            href="/inbox"
+            className="hover:text-blue-800 transition duration-300"
+          >
+            Inbox
+          </Link>
+        </div>
+
+        {/* Search Bar */}
+        <div className="flex items-center space-x-2 relative">
+          <input
+            ref={inputRef}
+            type="text"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onFocus={() => setIsModalOpen(true)}
+            className="px-8 py-2 rounded-lg bg-gray-100 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-sm w-48 lg:w-64"
+            aria-label="Search"
+          />
+          <button
+            onClick={onSearchClick}
+            className="bg-blue-800 text-white p-2 rounded-lg hover:bg-blue-900 transition duration-300 absolute right-2 top-1/2 transform -translate-y-1/2"
+            aria-label="Search"
+          >
+            <FaSearch className="text-lg" />
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="lg:hidden mt-4">
+          <ul className="flex flex-col space-y-4">
             <li>
               <Link
                 href="/"
                 className="hover:text-blue-800 transition duration-300"
+                onClick={() => setIsMobileMenuOpen(false)}
               >
                 Home
               </Link>
@@ -92,6 +166,7 @@ const Navbar = () => {
               <Link
                 href="/dashboard"
                 className="hover:text-blue-800 transition duration-300"
+                onClick={() => setIsMobileMenuOpen(false)}
               >
                 Dashboard
               </Link>
@@ -105,6 +180,7 @@ const Navbar = () => {
               <Link
                 href="/news"
                 className="hover:text-blue-800 transition duration-300"
+                onClick={() => setIsMobileMenuOpen(false)}
               >
                 News & Announcements
               </Link>
@@ -113,6 +189,7 @@ const Navbar = () => {
               <Link
                 href="/inbox"
                 className="hover:text-blue-800 transition duration-300"
+                onClick={() => setIsMobileMenuOpen(false)}
               >
                 Inbox
               </Link>
@@ -124,28 +201,7 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-
-        {/* Search Bar */}
-        <div className="flex items-center space-x-2 relative">
-          <input
-            ref={inputRef}
-            type="text"
-            placeholder="Search..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onFocus={() => setIsModalOpen(true)}
-            className="px-8 py-2 rounded-lg bg-gray-100 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-sm w-64"
-            aria-label="Search"
-          />
-          <button
-            onClick={onSearchClick}
-            className="bg-blue-800 text-white p-2 rounded-lg hover:bg-blue-900 transition duration-300 absolute right-2 top-1/2 transform -translate-y-1/2"
-            aria-label="Search"
-          >
-            <FaSearch className="text-lg" />
-          </button>
-        </div>
-      </div>
+      )}
 
       {/* Search Results Modal */}
       {isModalOpen && (
