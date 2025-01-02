@@ -5,7 +5,7 @@ import HomePage from "./sections/HomePage";
 const Home = () => {
   return (
     <div>
-      <Navbar />
+   
       <HomePage />
       <Footer />
     </div>

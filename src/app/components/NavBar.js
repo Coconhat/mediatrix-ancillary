@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { FaSearch } from "react-icons/fa"; // Importing the search icon from react-icons
-import { useState, useRef, useEffect } from 'react';
-import useSearch from '../hooks/useSearch'; // Import the custom hook
+import { useState, useRef, useEffect } from "react";
+import useSearch from "../hooks/useSearch"; // Import the custom hook
 
 const Navbar = () => {
   const items = [
@@ -16,12 +16,13 @@ const Navbar = () => {
     "System Maintenance",
   ]; // Example items for search
 
-  const { searchTerm, setSearchTerm, filteredItems, handleSearch } = useSearch(items);
+  const { searchTerm, setSearchTerm, filteredItems, handleSearch } =
+    useSearch(items);
   const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
   const [showNoResults, setShowNoResults] = useState(false); // State to track "No results"
   const [notifications, setNotifications] = useState({
-    dashboard: 1, // Example: 3 new notifications for Dashboard
-    inbox: 2, // Example: 5 new notifications for Inbox
+    dashboard: 1, // Example: 1 new notification for Dashboard
+    inbox: 2, // Example: 2 new notifications for Inbox
   }); // State for notifications
   const modalRef = useRef(null); // Ref for modal
   const inputRef = useRef(null); // Ref for search input
@@ -29,18 +30,23 @@ const Navbar = () => {
   // Close the modal if clicked outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target) && inputRef.current && !inputRef.current.contains(event.target)) {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target) &&
+        inputRef.current &&
+        !inputRef.current.contains(event.target)
+      ) {
         setIsModalOpen(false); // Close modal if clicked outside
         setSearchTerm(""); // Clear search term
       }
     };
 
     // Add event listener for clicks
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     // Cleanup event listener on component unmount
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -66,19 +72,27 @@ const Navbar = () => {
       <div className="flex justify-between items-center h-20">
         {/* Logo */}
         <div className="flex items-center">
-          <h1 className="font-bold">Ancillary Communication and Updates Platform</h1>
+          <h1 className="font-bold text-xl">
+            Ancillary Communication and Updates Platform
+          </h1>
         </div>
 
         {/* Navigation Links */}
         <div className="flex-1 flex justify-center">
-          <ul className="flex space-x-10">
+          <ul className="flex space-x-12">
             <li>
-              <Link href="/" className="hover:text-blue-800">
+              <Link
+                href="/"
+                className="hover:text-blue-800 transition duration-300"
+              >
                 Home
               </Link>
             </li>
             <li className="relative">
-              <Link href="/dashboard" className="hover:text-blue-800">
+              <Link
+                href="/dashboard"
+                className="hover:text-blue-800 transition duration-300"
+              >
                 Dashboard
               </Link>
               {notifications.dashboard > 0 && (
@@ -87,9 +101,19 @@ const Navbar = () => {
                 </span>
               )}
             </li>
-
+            <li>
+              <Link
+                href="/news"
+                className="hover:text-blue-800 transition duration-300"
+              >
+                News & Announcements
+              </Link>
+            </li>
             <li className="relative">
-              <Link href="/inbox" className="hover:text-blue-800">
+              <Link
+                href="/inbox"
+                className="hover:text-blue-800 transition duration-300"
+              >
                 Inbox
               </Link>
               {notifications.inbox > 0 && (
@@ -114,7 +138,7 @@ const Navbar = () => {
           />
           <button
             onClick={onSearchClick} // Trigger search function on click
-            className="bg-blue-800 text-white p-2 rounded-lg hover:bg-blue-900 absolute right-2 top-1/2 transform -translate-y-1/2"
+            className="bg-blue-800 text-white p-2 rounded-lg hover:bg-blue-900 transition duration-300 absolute right-2 top-1/2 transform -translate-y-1/2"
           >
             <FaSearch className="text-lg" />
           </button>
@@ -136,7 +160,10 @@ const Navbar = () => {
                 ) : (
                   <ul className="space-y-2">
                     {filteredItems.map((item, index) => (
-                      <li key={index} className="p-2 bg-blue-50 rounded-lg border border-blue-200">
+                      <li
+                        key={index}
+                        className="p-2 bg-blue-50 rounded-lg border border-blue-200 hover:bg-blue-100 transition duration-300"
+                      >
                         {item}
                       </li>
                     ))}
