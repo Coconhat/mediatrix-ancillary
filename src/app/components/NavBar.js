@@ -48,7 +48,7 @@ const Navbar = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [setSearchTerm]); // Add setSearchTerm to the dependency array
 
   // Function to handle search
   const onSearchClick = () => {
@@ -96,7 +96,7 @@ const Navbar = () => {
                 Dashboard
               </Link>
               {notifications.dashboard > 0 && (
-                <span className="absolute top-[-11px] right-[-10px] bg-red-600 text-white text-xs rounded-full px-2 py-1">
+                <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-600 text-white text-xs rounded-full px-2 py-1">
                   {notifications.dashboard}
                 </span>
               )}
@@ -117,7 +117,7 @@ const Navbar = () => {
                 Inbox
               </Link>
               {notifications.inbox > 0 && (
-                <span className="absolute top-[-11px] right-[-10px] bg-red-600 text-white text-xs rounded-full px-2 py-1">
+                <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-600 text-white text-xs rounded-full px-2 py-1">
                   {notifications.inbox}
                 </span>
               )}
@@ -128,17 +128,19 @@ const Navbar = () => {
         {/* Search Bar */}
         <div className="flex items-center space-x-2 relative">
           <input
-            ref={inputRef} // Attach ref to input
+            ref={inputRef}
             type="text"
             placeholder="Search..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)} // Update search term
-            onFocus={() => setIsModalOpen(true)} // Open modal when focused
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onFocus={() => setIsModalOpen(true)}
             className="px-8 py-2 rounded-lg bg-gray-100 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-sm w-64"
+            aria-label="Search"
           />
           <button
-            onClick={onSearchClick} // Trigger search function on click
+            onClick={onSearchClick}
             className="bg-blue-800 text-white p-2 rounded-lg hover:bg-blue-900 transition duration-300 absolute right-2 top-1/2 transform -translate-y-1/2"
+            aria-label="Search"
           >
             <FaSearch className="text-lg" />
           </button>
@@ -149,7 +151,7 @@ const Navbar = () => {
       {isModalOpen && (
         <div
           ref={modalRef}
-          className="absolute top-16 right-0 w-64 bg-white shadow-lg p-4 rounded-lg z-10"
+          className="absolute top-full mt-2 right-0 w-64 bg-white shadow-lg p-4 rounded-lg z-10"
         >
           <div className="max-h-80 overflow-y-auto">
             {/* Show "No results found" only if user has searched */}
