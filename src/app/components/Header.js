@@ -8,7 +8,7 @@ export default function Header() {
           Welcome to ACUP (Ancillary Communication and Updates Platform)
         </h2>
         <p className="text-lg">
-          Address Complex Operations. Enhance Compliance and Documentation. Support Efficiency.
+          Address Operations. Enhance Compliance and Documentation. Support Efficiency.
         </p>
       </div>
     </div>
