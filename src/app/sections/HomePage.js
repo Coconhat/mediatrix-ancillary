@@ -11,21 +11,20 @@ const HomePage = () => {
 
       {/* Sticky Scroll Sections */}
       <div className="relative">
-        {/* Component1: Sticky at the top with adjusted height */}
-        <div className="sticky top-0 h-[600px] z-10">
+        {/* Component1: Sticky at the top, but scrolls away when you scroll */}
+        <div className="sticky top-0 z-10">
           <Component1 />
         </div>
 
-        {/* Component2: Sticky and positioned below Component1 */}
-        <div className="sticky top-[600px] z-20">
+        {/* Component2: Sticky after Component1, should stick when Component1 moves out of view */}
+        <div className="sticky top-[400px] z-20">
           <Component2 />
         </div>
       </div>
 
       {/* Component 3 Section */}
-      <div className="sticky top-[600px] z-30">
-
-      <Component3 />
+      <div className="z-30">
+        <Component3 />
       </div>
     </div>
   );

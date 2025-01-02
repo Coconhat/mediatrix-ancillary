@@ -19,6 +19,10 @@ const Navbar = () => {
   const { searchTerm, setSearchTerm, filteredItems, handleSearch } = useSearch(items);
   const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
   const [showNoResults, setShowNoResults] = useState(false); // State to track "No results"
+  const [notifications, setNotifications] = useState({
+    dashboard: 1, // Example: 3 new notifications for Dashboard
+    inbox: 2, // Example: 5 new notifications for Inbox
+  }); // State for notifications
   const modalRef = useRef(null); // Ref for modal
   const inputRef = useRef(null); // Ref for search input
 
@@ -73,16 +77,26 @@ const Navbar = () => {
                 Home
               </Link>
             </li>
-            <li>
+            <li className="relative">
               <Link href="/dashboard" className="hover:text-blue-800">
                 Dashboard
               </Link>
+              {notifications.dashboard > 0 && (
+                <span className="absolute top-[-11px] right-[-10px] bg-red-600 text-white text-xs rounded-full px-2 py-1">
+                  {notifications.dashboard}
+                </span>
+              )}
             </li>
 
-            <li>
+            <li className="relative">
               <Link href="/inbox" className="hover:text-blue-800">
                 Inbox
               </Link>
+              {notifications.inbox > 0 && (
+                <span className="absolute top-[-11px] right-[-10px] bg-red-600 text-white text-xs rounded-full px-2 py-1">
+                  {notifications.inbox}
+                </span>
+              )}
             </li>
           </ul>
         </div>

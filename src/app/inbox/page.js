@@ -24,6 +24,7 @@ export default function Inbox() {
       sender: "Alice",
       timestamp: "2025-01-01 10:30 AM",
       body: "A new policy regarding remote work has been implemented.",
+      isRead: false,
     },
     {
       id: 2,
@@ -31,6 +32,7 @@ export default function Inbox() {
       sender: "Bob",
       timestamp: "2025-01-02 09:00 AM",
       body: "Scheduled maintenance will occur this weekend.",
+      isRead: false,
     },
     {
       id: 3,
@@ -38,6 +40,7 @@ export default function Inbox() {
       sender: "Alice",
       timestamp: "2025-01-01 10:30 AM",
       body: "A new policy regarding remote work has been implemented.",
+      isRead: true,
     },
     {
       id: 4,
@@ -45,6 +48,7 @@ export default function Inbox() {
       sender: "Bob",
       timestamp: "2025-01-02 09:00 AM",
       body: "Scheduled maintenance will occur this weekend.",
+      isRead: true,
     },
     {
       id: 5,
@@ -52,6 +56,7 @@ export default function Inbox() {
       sender: "Alice",
       timestamp: "2025-01-01 10:30 AM",
       body: "A new policy regarding remote work has been implemented.",
+      isRead: true,
     },
     {
       id: 6,
@@ -59,6 +64,7 @@ export default function Inbox() {
       sender: "Bob",
       timestamp: "2025-01-02 09:00 AM",
       body: "Scheduled maintenance will occur this weekend.",
+      isRead: true,
     },
   ];
 
@@ -77,6 +83,10 @@ export default function Inbox() {
 
   const openMessageDetails = (message) => {
     setSelectedMessage(message);
+    // Mark message as read when opened
+    if (!message.isRead) {
+      message.isRead = true;
+    }
   };
 
   const closeMessageDetails = () => {
@@ -99,41 +109,46 @@ export default function Inbox() {
   };
 
   return (
-<div className="bg-gray-50 min-h-screen pt-20 mt-11">
-  <NavBar />
-  <div className="container mx-auto px-4 py-10">
-    <div className="bg-white p-6 rounded-lg shadow-lg max-w-4xl mx-auto">
-      <h2 className="text-2xl font-bold mb-6 text-blue-800">Inbox</h2>
+    <div className="bg-gray-50 min-h-screen pt-20 mt-11">
+      <NavBar />
+      <div className="container mx-auto px-4 py-10">
+        <div className="bg-white p-6 rounded-lg shadow-lg max-w-4xl mx-auto">
+          <h2 className="text-2xl font-bold mb-6 text-blue-800">Inbox</h2>
 
-      {/* List of received messages */}
-      <div className="space-y-4">
-        {messages.map((message) => (
-          <div
-            key={message.id}
-            className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow flex items-center justify-between cursor-pointer"
-            onClick={() => openMessageDetails(message)}
-          >
-            <div>
-              <div className="font-semibold text-lg text-black">{message.subject}</div>
-              <div className="text-sm text-gray-600">{message.body}</div>
-              <div className="text-sm text-gray-400 mt-1">{message.timestamp}</div>
-            </div>
-            <span className="text-gray-500 text-xl font-bold">&gt;</span>
-          </div>
-        ))}
-      </div>
-
-      {/* Compose Message Button */}
-      <div className="flex justify-end mt-6">
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-blue-700 transition-colors"
-        >
-          Compose Message
-        </button>
-      </div>
-    </div>
+          {/* List of received messages */}
+          <div className="space-y-4">
+            {messages.map((message) => (
+              <div
+  key={message.id}
+  className={`border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow flex items-center justify-between cursor-pointer ${message.isRead ? "bg-gray-200" : "bg-white"} relative`} // Add relative here
+  onClick={() => openMessageDetails(message)}
+>
+  <div>
+    <div className="font-semibold text-lg text-black">{message.subject}</div>
+    <div className="text-sm text-gray-600">{message.body}</div>
+    <div className="text-sm text-gray-400 mt-1">{message.timestamp}</div>
   </div>
+  {/* Red dot for unread messages */}
+  {!message.isRead && (
+    <span className="absolute top-2 right-2 bg-red-500 w-3 h-3 rounded-full"></span>
+  )}
+  <span className="text-gray-500 text-xl font-bold">&gt;</span>
+</div>
+
+            ))}
+          </div>
+
+          {/* Compose Message Button */}
+          <div className="flex justify-end mt-6">
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-blue-700 transition-colors"
+            >
+              Compose Message
+            </button>
+          </div>
+        </div>
+      </div>
 
       {/* Modal for Compose New Message */}
       {isModalOpen && (
