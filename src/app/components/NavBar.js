@@ -79,12 +79,21 @@ const Navbar = () => {
         {/* Logo and Hamburger Menu */}
         <div className="flex items-center space-x-4">
           <h1 className="font-bold text-lg lg:text-xl">
-            <span className="lg:hidden">ACUP</span>{" "}
-            {/* Shortened logo for mobile */}
-            <span className="hidden lg:inline">
-              Ancillary Communication and Updates Platform
-            </span>{" "}
-            {/* Full logo for desktop */}
+            <Link
+              href="/"
+              className="hover:text-blue-800 transition duration-300"
+            >
+              <span className="lg:hidden">ACUP</span>{" "}
+            </Link>
+
+            <Link
+              href="/"
+              className="hover:text-blue-800 transition duration-300"
+            >
+              <span className="hidden lg:inline">
+                Ancillary Communication and Updates Platform
+              </span>{" "}
+            </Link>
           </h1>
           <button
             onClick={toggleMobileMenu}

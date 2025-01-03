@@ -115,10 +115,10 @@ export default function DonutChart() {
               nameKey="name"
               cx="50%"
               cy="50%"
-              innerRadius={60} // Creates the "hole" for the donut chart
+              innerRadius={60} 
               outerRadius={80}
-              paddingAngle={5} // Adds space between segments
-              stroke="none" // Removes the stroke between segments
+              paddingAngle={5} 
+              stroke="none" 
             >
               {/* Custom Label for Total and "requests" */}
               <Label

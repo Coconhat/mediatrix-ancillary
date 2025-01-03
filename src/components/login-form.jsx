@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import imageHeader from "../../public/assets/mediatrixlogo.jpg";
+import Link from "next/link";
 
 export function LoginForm({ className, ...props }) {
   return (
@@ -40,9 +41,11 @@ export function LoginForm({ className, ...props }) {
                 </div>
                 <Input id="password" type="password" required />
               </div>
-              <Button type="submit" className="w-full">
-                Login
-              </Button>
+              <Link href="/">
+                <Button className="w-full">
+                  Login
+                </Button>
+              </Link>
 
               <div className="grid grid-cols-3 gap-4"></div>
               <div className="text-center text-sm">

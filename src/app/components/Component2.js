@@ -31,6 +31,7 @@ export default function Component2() {
             layout="fill" 
             objectFit="cover" 
             className="rounded-r-xl"
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
           />
         </div>
       </div>
