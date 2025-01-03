@@ -182,7 +182,7 @@ export default function DonutChart() {
           }}
         >
           {arrow} Trending {isPositive ? "up" : "down"} by{" "}
-          {Math.abs(trendingPercentage).toFixed(2)}% compared to last week
+          {Math.abs(trendingPercentage).toFixed(2)}% compared to last week.
         </div>
         <div className="leading-none text-muted-foreground mx-auto">
           Showing total service requests for {selectedOption}
