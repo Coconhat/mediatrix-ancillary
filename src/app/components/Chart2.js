@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { BarChart, Bar, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { MenuIcon} from "lucide-react"
 
 const numberFormatter = new Intl.NumberFormat("en-US");
 
@@ -89,7 +90,10 @@ export default function Chart2() {
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             className="text-xl focus:outline-none hover:bg-gray-100 rounded-full p-1 transition-colors duration-200"
           >
-            ...
+           <MenuIcon
+              size={24}
+             
+            />
           </button>
 
           {/* Dropdown Menu */}

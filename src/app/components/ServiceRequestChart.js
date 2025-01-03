@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { PieChart, Pie, Tooltip, ResponsiveContainer, Label } from "recharts";
-import { TrendingUp, TrendingDown } from "lucide-react"; // Import TrendingUp and TrendingDown icons
+import { TrendingUp, TrendingDown, MenuIcon } from "lucide-react"; // Import TrendingUp and TrendingDown icons
 
 // Function to generate dummy data for a given week
 const generateDummyData = () => {
@@ -76,7 +76,10 @@ export default function DonutChart() {
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             className="text-xl focus:outline-none hover:bg-gray-100 rounded-full p-1 transition-colors duration-200"
           >
-            ...
+           <MenuIcon
+              size={24}
+              className="text-gray-600"
+            />
           </button>
 
           {/* Dropdown Menu */}

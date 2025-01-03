@@ -1,3 +1,5 @@
+import { MenuIcon } from "lucide-react";
+
 export default function Card({ type }) {
   const dataMap = {
     patient: {
@@ -26,7 +28,9 @@ export default function Card({ type }) {
         <h2 className="capitalize text-lg font-semibold text-gray-800 px-1 py-1 mb-1">
           {cardData.title}
         </h2>
-        <span>...</span>
+        <MenuIcon
+          size={24}
+          className="text-gray-600" />
       </div>
 
       <div className="flex justify-between items-center">

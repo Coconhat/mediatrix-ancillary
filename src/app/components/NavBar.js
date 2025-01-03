@@ -164,7 +164,7 @@ const Navbar = () => {
           <ul className="flex flex-col space-y-4">
             <li>
               <Link
-                href="/"
+                href="/home"
                 className="hover:text-blue-800 transition duration-300"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
