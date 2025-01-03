@@ -80,14 +80,14 @@ const Navbar = () => {
         <div className="flex items-center space-x-4">
           <h1 className="font-bold text-lg lg:text-xl">
             <Link
-              href="/"
+              href="/home"
               className="hover:text-blue-800 transition duration-300"
             >
               <span className="lg:hidden">ACUP</span>{" "}
             </Link>
 
             <Link
-              href="/"
+              href="/home"
               className="hover:text-blue-800 transition duration-300"
             >
               <span className="hidden lg:inline">
@@ -111,7 +111,7 @@ const Navbar = () => {
         {/* Desktop Navigation Links */}
         <div className="hidden lg:flex lg:items-center lg:space-x-12">
           <Link
-            href="/"
+            href="/home"
             className="hover:text-blue-800 transition duration-300"
           >
             Home

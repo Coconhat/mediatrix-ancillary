@@ -7,7 +7,7 @@ export default function ClientNavbarWrapper() {
   const pathname = usePathname();
 
   // Conditionally render Navbar
-  if (pathname === "/login") {
+  if (pathname === "/") {
     return null;
   }
 
