@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { PieChart, Pie, Tooltip, ResponsiveContainer, Label } from "recharts";
-import { TrendingUp, TrendingDown, MenuIcon } from "lucide-react"; // Import TrendingUp and TrendingDown icons
+import { TrendingUp, TrendingDown, MenuIcon } from "lucide-react"; 
 
 // Function to generate dummy data for a given week
 const generateDummyData = () => {

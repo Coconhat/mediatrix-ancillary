@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { BarChart, Bar, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { MenuIcon} from "lucide-react"
+import { MenuIcon, TrendingDown, TrendingUp } from "lucide-react";
 
 const numberFormatter = new Intl.NumberFormat("en-US");
 
@@ -63,7 +63,11 @@ export default function Chart2() {
 
   // Determine the color and arrow based on the percentage change
   const isPositive = percentageChange >= 0;
-  const arrow = isPositive ? "↑" : "↓";
+  const arrow = isPositive ? (
+    <TrendingUp className="h-4 w-4" />
+  ) : (
+    <TrendingDown className="h-4 w-4" />
+  );
   const color = isPositive ? "green" : "red";
   const displayPercentage = Math.abs(percentageChange).toFixed(2);
 
@@ -74,8 +78,9 @@ export default function Chart2() {
           <h2 className="text-lg font-semibold capitalize">
             Revenue generated {selectedOption}
           </h2>
+
           <p
-            className={`text-sm px-2 py-1 rounded inline-block`}
+            className={`text-sm flex mx-auto items-center rounded-full px-3 py-1`}
             style={{
               backgroundColor: isPositive ? "#e6f4ea" : "#fce8e6",
               color: color,
@@ -85,15 +90,11 @@ export default function Chart2() {
           </p>
         </div>
         <div className="relative">
-          {/* "..." Button */}
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             className="text-xl focus:outline-none hover:bg-gray-100 rounded-full p-1 transition-colors duration-200"
           >
-           <MenuIcon
-              size={24}
-             
-            />
+            <MenuIcon size={24} />
           </button>
 
           {/* Dropdown Menu */}
