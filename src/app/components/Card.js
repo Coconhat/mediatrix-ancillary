@@ -140,7 +140,7 @@ export default function Card({ type }) {
       </div>
 
       <div className="flex justify-between items-center">
-        <span className="text-[10px] bg-blue-700 px-2 py-1 rounded-full text-white">
+        <span className="text-xs bg-blue-700 px-2 py-1 rounded-full text-white">
           {getDateForOption(selectedOption).toLocaleDateString()}
         </span>
       </div>
