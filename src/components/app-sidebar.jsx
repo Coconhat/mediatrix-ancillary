@@ -31,7 +31,7 @@ const data = {
   teams: [
     {
       name: "City General Hospital",
-      logo: Home, 
+      logo: Home,
       plan: "Healthcare",
     },
   ],
@@ -41,64 +41,18 @@ const data = {
       url: "#",
       icon: Home,
       isActive: true,
-      items: [
-        {
-          title: "Update Total Patients",
-          url: "#",
-        },
-        {
-          title: "Update Revenue This Month",
-          url: "#",
-        },
-        {
-          title: "Update Appointments Number",
-          url: "#",
-        },
-      ],
     },
     {
       title: "Finance",
       url: "#",
       icon: DollarSign,
-      items: [
-        {
-          title: "Update weeky revenue",
-          url: "#",
-        },
-        {
-          title: "Expenses",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Reports",
-          url: "#",
-        },
-      ],
     },
     {
       title: "News & Updates",
       url: "#",
       icon: FileText,
-      items: [
-        {
-          title: "Post News",
-          url: "#",
-        },
-        {
-          title: "Edit News",
-          url: "#",
-        },
-        {
-          title: "Announcements",
-          url: "#",
-        },
-      ],
     },
-   
+
     {
       title: "Staff",
       url: "#",
@@ -150,7 +104,8 @@ const data = {
 
 export function AppSidebar({ ...props }) {
   return (
-    <Sidebar collapsible="icon" {...props} >
+    <Sidebar collapsible="icon" {...props}>
+      <SidebarHeader>{"need to for ui proposes lol"}</SidebarHeader>
       <SidebarHeader>
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
