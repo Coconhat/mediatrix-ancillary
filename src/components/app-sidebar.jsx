@@ -21,6 +21,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import Link from "next/link";
 
 const data = {
   user: {
@@ -44,7 +45,7 @@ const data = {
     },
     {
       title: "Finance",
-      url: "#",
+      url: "/edit/finance",
       icon: DollarSign,
     },
     {
