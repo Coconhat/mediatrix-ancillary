@@ -111,12 +111,6 @@ const Navbar = () => {
         {/* Desktop Navigation Links */}
         <div className="hidden lg:flex lg:items-center lg:space-x-12">
           <Link
-            href="/home"
-            className="hover:text-blue-800 transition duration-300"
-          >
-            Home
-          </Link>
-          <Link
             href="/dashboard"
             className="hover:text-blue-800 transition duration-300"
           >
@@ -169,15 +163,6 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div className="lg:hidden mt-4">
           <ul className="flex flex-col space-y-4">
-            <li>
-              <Link
-                href="/home"
-                className="hover:text-blue-800 transition duration-300"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Home
-              </Link>
-            </li>
             <li className="relative">
               <Link
                 href="/dashboard"
@@ -209,11 +194,22 @@ const Navbar = () => {
               >
                 Inbox
               </Link>
+
               {notifications.inbox > 0 && (
                 <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-600 text-white text-xs rounded-full px-2 py-1">
                   {notifications.inbox}
                 </span>
               )}
+            </li>
+
+            <li>
+              <Link
+                href="/edit"
+                className="hover:text-blue-800 transition duration-300"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Edit
+              </Link>
             </li>
           </ul>
         </div>
