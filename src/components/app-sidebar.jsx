@@ -21,7 +21,6 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import Link from "next/link";
 
 const data = {
   user: {
@@ -31,15 +30,15 @@ const data = {
   },
   teams: [
     {
-      name: "City General Hospital",
+      name: "Mediatrix ACUP",
       logo: Home,
       plan: "Healthcare",
     },
   ],
   navMain: [
     {
-      title: "Dashboard",
-      url: "#", 
+      title: "Overview",
+      url: "/edit", 
       icon: Home,
       isActive: true,
     },
