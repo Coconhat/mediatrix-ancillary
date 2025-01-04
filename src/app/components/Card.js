@@ -17,6 +17,13 @@ export default function Card({ type }) {
         "Last 3 weeks": "1,100",
         "Last month": "1,050",
       },
+      percentage: {
+        "This week": "2%",
+        "Last week": "1.5%",
+        "Last 2 weeks": "1.2%",
+        "Last 3 weeks": "1%",
+        "Last month": "0.8%",
+      },
     },
     sales: {
       title: "Revenue This Month",
@@ -26,6 +33,13 @@ export default function Card({ type }) {
         "Last 2 weeks": "₱10,400,000",
         "Last 3 weeks": "₱10,000,000",
         "Last month": "₱9,600,000",
+      },
+      percentage: {
+        "This week": "3%",
+        "Last week": "2.5%",
+        "Last 2 weeks": "2%",
+        "Last 3 weeks": "1.5%",
+        "Last month": "1%",
       },
     },
     appointments: {
@@ -37,6 +51,13 @@ export default function Card({ type }) {
         "Last 3 weeks": "30",
         "Last month": "25",
       },
+      percentage: {
+        "This week": "5%",
+        "Last week": "4.5%",
+        "Last 2 weeks": "4%",
+        "Last 3 weeks": "3.5%",
+        "Last month": "3%",
+      },
     },
     staff: {
       title: "Staff on Duty",
@@ -47,18 +68,45 @@ export default function Card({ type }) {
         "Last 3 weeks": "24",
         "Last month": "22",
       },
+      percentage: {
+        "This week": "7%",
+        "Last week": "6.5%",
+        "Last 2 weeks": "6%",
+        "Last 3 weeks": "5.5%",
+        "Last month": "5%",
+      },
     },
   };
 
-  const cardData = dataMap[type] || { title: "Unknown", values: {} };
+  const cardData = dataMap[type] || {
+    title: "Unknown",
+    values: {},
+    percentage: {},
+  };
 
   function handleOptionClick(option) {
     setSelectedOption(option);
     setIsDropDown(false);
   }
 
+  function getDateForOption(option) {
+    const today = new Date();
+    switch (option) {
+      case "This week":
+        return today;
+      case "Last week":
+        return new Date(today.setDate(today.getDate() - 7));
+      case "Last 2 weeks":
+        return new Date(today.setDate(today.getDate() - 14));
+      case "Last 3 weeks":
+        return new Date(today.setDate(today.getDate() - 21));
+      case "Last month":
+        return new Date(today.setDate(today.getDate() - 30));
+    }
+  }
+
   return (
-    <div className="rounded-2xl odd:bg-[#F3D3B5] even:bg-[#B5D3F3] p-4 flex-1 min-w-[130px] relative">
+    <div className="rounded-2xl bg-white p-4 flex-1 min-w-[130px] relative">
       <div className="flex justify-between">
         <h2 className="capitalize text-lg font-semibold text-gray-800 px-1 py-1 mb-1">
           {cardData.title}
@@ -92,13 +140,16 @@ export default function Card({ type }) {
       </div>
 
       <div className="flex justify-between items-center">
-        <span className="text-[10px] bg-white px-2 py-1 rounded-full text-green-600">
-          {new Date().toLocaleDateString()}
+        <span className="text-[10px] bg-blue-700 px-2 py-1 rounded-full text-white">
+          {getDateForOption(selectedOption).toLocaleDateString()}
         </span>
       </div>
-      <h1 className="text-2xl font-semibold my-4">
+      <h1 className="text-2xl font-semibold mt-3">
         {cardData.values[selectedOption]}
       </h1>
+      <p className="text-gray-500  lowercase">
+        {`+${cardData.percentage[selectedOption]} from ${selectedOption}`}
+      </p>
     </div>
   );
 }
