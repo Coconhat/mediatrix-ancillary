@@ -134,6 +134,13 @@ const Navbar = () => {
           >
             Inbox
           </Link>
+
+          <Link
+            href="/edit"
+            className="hover:text-blue-800 transition duration-300"
+          >
+            Edit
+          </Link>
         </div>
 
         {/* Search Bar */}
