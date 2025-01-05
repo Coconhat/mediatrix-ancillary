@@ -159,7 +159,6 @@ export default function NotificationsPage() {
 
   const handleNotificationClick = (notification) => {
     setSelectedNotification(notification);
-    // Mark notification as read
     setNotifications(
       notifications.map((notif) =>
         notif.id === notification.id ? { ...notif, isRead: true } : notif
@@ -169,16 +168,16 @@ export default function NotificationsPage() {
 
   return (
     <SidebarProvider>
-      <div className="flex h-screen">
+      <div className="flex min-h-screen w-full">
         <DirectorySidebar />
-        <div className="flex-1 overflow-hidden">
+        <main className="flex-grow w-full">
           {/* Sticky Header with Breadcrumb */}
-          <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-2 bg-white shadow-sm transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
-            <div className="flex items-center gap-2 px-4">
+          <header className="sticky top-0 z-10 w-full h-16 bg-white shadow-sm">
+            <div className="h-full px-4 flex items-center overflow-x-auto">
               <SidebarTrigger className="-ml-1" />
-              <Separator orientation="vertical" className="mr-2 h-4" />
-              <Breadcrumb>
-                <BreadcrumbList>
+              <Separator orientation="vertical" className="mx-2 h-4" />
+              <Breadcrumb className="w-full">
+                <BreadcrumbList className="flex-nowrap whitespace-nowrap">
                   <BreadcrumbItem className="hidden md:block">
                     <BreadcrumbLink href="#">
                       ACUP Management
@@ -194,12 +193,12 @@ export default function NotificationsPage() {
           </header>
 
           {/* Main Content */}
-          <div className="p-8 overflow-y-auto h-[calc(100vh-96px)]">
-            <div className="max-w-6xl mx-auto w-full">
-              <h1 className="text-3xl font-bold text-blue-800 mb-8">
+          <div className="w-full p-4 md:p-6">
+            <div className="w-full">
+              <h1 className="text-2xl md:text-3xl font-bold text-blue-800 mb-6">
                 Notifications
               </h1>
-              <div className="space-y-6">
+              <div className="space-y-4 w-full">
                 {notifications.map((notification) => (
                   <NotificationItem
                     key={notification.id}
@@ -213,12 +212,33 @@ export default function NotificationsPage() {
 
           {/* Notification Modal */}
           {selectedNotification && (
-            <NotificationModal
-              notification={selectedNotification}
-              onClose={() => setSelectedNotification(null)}
-            />
+            <div
+              className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4"
+              onClick={() => setSelectedNotification(null)}
+            >
+              <div
+                className="bg-white p-4 sm:p-6 rounded-lg shadow-lg w-full max-w-2xl overflow-y-auto max-h-[90vh]"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button 
+                  className="text-blue-600 mb-4" 
+                  onClick={() => setSelectedNotification(null)}
+                >
+                  Back
+                </button>
+                <h2 className="text-lg sm:text-xl font-semibold mb-4 text-blue-800 break-words">
+                  {selectedNotification.title}
+                </h2>
+                <div className="text-sm text-gray-500 mb-2">
+                  {selectedNotification.timestamp} • {selectedNotification.source}
+                </div>
+                <div className="text-black whitespace-pre-line break-words">
+                  {selectedNotification.message}
+                </div>
+              </div>
+            </div>
           )}
-        </div>
+        </main>
       </div>
     </SidebarProvider>
   );

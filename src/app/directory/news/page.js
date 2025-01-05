@@ -140,7 +140,7 @@ export default function DashboardPage() {
 
   return (
     <SidebarProvider>
-      <div className="flex">
+      <div className="flex min-h-screen w-full">
         {/* Sidebar */}
         <DirectorySidebar>
           <ul className="space-y-4 mt-4">
@@ -183,19 +183,17 @@ export default function DashboardPage() {
           </ul>
         </DirectorySidebar>
 
-        {/* Content Section */}
-        <div className="flex-1 flex flex-col w-full">
+        {/* Main Content Wrapper */}
+        <main className="flex-grow w-full">
           {/* Sticky Header with Breadcrumb */}
-          <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-2 bg-white shadow-sm transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
-            <div className="flex items-center gap-2 px-4">
+          <header className="sticky top-0 z-10 w-full h-16 bg-white shadow-sm">
+            <div className="h-full px-4 flex items-center overflow-x-auto">
               <SidebarTrigger className="-ml-1" />
-              <Separator orientation="vertical" className="mr-2 h-4" />
-              <Breadcrumb>
-                <BreadcrumbList>
+              <Separator orientation="vertical" className="mx-2 h-4" />
+              <Breadcrumb className="w-full">
+                <BreadcrumbList className="flex-nowrap whitespace-nowrap">
                   <BreadcrumbItem className="hidden md:block">
-                    <BreadcrumbLink href="#">
-                      ACUP Management
-                    </BreadcrumbLink>
+                    <BreadcrumbLink href="#">ACUP Management</BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator className="hidden md:block" />
                   <BreadcrumbItem>
@@ -207,136 +205,125 @@ export default function DashboardPage() {
           </header>
 
           {/* Main Content */}
-          <div className="flex-1 flex flex-col items-center w-full px-16 sm:px-8">
-            <div className="bg-white min-h-screen w-full max-w-7xl mx-auto">
-              <div className="space-y-6 mt-8 w-full">
-                {/* Announcements Section */}
-                <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg w-full">
-                  <h2 className="text-lg sm:text-xl font-bold mb-4 text-blue-800">
-                    ANNOUNCEMENTS
-                  </h2>
-                  <div className="space-y-4">
-                    {sortedAnnouncements.map((announcement) => (
-                      <AnnouncementCard
-                        key={announcement.id}
-                        title={announcement.title}
-                        description={announcement.description}
-                        isRead={announcement.isRead}
-                        onClick={() =>
-                          openItemDetails(announcement, "announcement")
-                        }
-                      />
-                    ))}
-                  </div>
+          <div className="w-full p-4 md:p-6">
+            <div className="w-full space-y-6">
+              {/* Announcements Section */}
+              <section className="bg-white p-4 rounded-lg shadow-lg w-full">
+                <h2 className="text-lg sm:text-xl font-bold mb-4 text-blue-800">
+                  ANNOUNCEMENTS
+                </h2>
+                <div className="space-y-4">
+                  {sortedAnnouncements.map((announcement) => (
+                    <AnnouncementCard
+                      key={announcement.id}
+                      title={announcement.title}
+                      description={announcement.description}
+                      isRead={announcement.isRead}
+                      onClick={() => openItemDetails(announcement, "announcement")}
+                    />
+                  ))}
                 </div>
+              </section>
 
-                {/* Latest News Section */}
-                <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg w-full">
-                  <h2 className="text-lg sm:text-xl font-bold mb-4 text-blue-800">
-                    LATEST NEWS
-                  </h2>
-                  <div className="space-y-4">
-                    {sortedNews.map((newsItem) => (
-                      <AnnouncementCard
-                        key={newsItem.id}
-                        title={newsItem.title}
-                        description={newsItem.description}
-                        isRead={newsItem.isRead}
-                        onClick={() => openItemDetails(newsItem, "news")}
-                      />
-                    ))}
-                  </div>
+              {/* Latest News Section */}
+              <section className="bg-white p-4 rounded-lg shadow-lg w-full">
+                <h2 className="text-lg sm:text-xl font-bold mb-4 text-blue-800">
+                  LATEST NEWS
+                </h2>
+                <div className="space-y-4">
+                  {sortedNews.map((newsItem) => (
+                    <AnnouncementCard
+                      key={newsItem.id}
+                      title={newsItem.title}
+                      description={newsItem.description}
+                      isRead={newsItem.isRead}
+                      onClick={() => openItemDetails(newsItem, "news")}
+                    />
+                  ))}
                 </div>
+              </section>
 
-                {/* Memos Section */}
-                <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg w-full">
-                  <h2 className="text-lg sm:text-xl font-bold mb-4 text-blue-800">
-                    Memos
-                  </h2>
-                  <div className="space-y-4">
-                    {memos.map((memo) => (
-                      <div
-                        key={memo.id}
-                        className={`relative border p-4 rounded-lg hover:shadow-lg transition-shadow cursor-pointer ${
-                          memo.read ? "bg-gray-200" : "bg-white"
-                        }`}
-                        onClick={() => openMemoDetails(memo)}
-                      >
-                        {!memo.read && (
-                          <div className="absolute top-2 right-2 w-3 h-3 bg-red-500 rounded-full"></div>
-                        )}
-                        <h3 className="text-lg font-semibold text-blue-800">
-                          {memo.title}
-                        </h3>
-                        <p className="text-gray-600">{memo.description}</p>
-                      </div>
-                    ))}
-                  </div>
+              {/* Memos Section */}
+              <section className="bg-white p-4 rounded-lg shadow-lg w-full">
+                <h2 className="text-lg sm:text-xl font-bold mb-4 text-blue-800">
+                  Memos
+                </h2>
+                <div className="space-y-4 w-full">
+                  {memos.map((memo) => (
+                    <div
+                      key={memo.id}
+                      className={`relative border p-4 rounded-lg hover:shadow-lg transition-shadow cursor-pointer w-full ${
+                        memo.read ? "bg-gray-200" : "bg-white"
+                      }`}
+                      onClick={() => openMemoDetails(memo)}
+                    >
+                      {!memo.read && (
+                        <div className="absolute top-2 right-2 w-3 h-3 bg-red-500 rounded-full"></div>
+                      )}
+                      <h3 className="text-lg font-semibold text-blue-800 break-words">
+                        {memo.title}
+                      </h3>
+                      <p className="text-gray-600 break-words">{memo.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            </div>
+          </div>
+
+          {/* Modals */}
+          {selectedMemo && (
+            <div
+              className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4"
+              onClick={closeMemoDetails}
+            >
+              <div
+                className="bg-white p-4 sm:p-6 rounded-lg shadow-lg w-full max-w-2xl overflow-y-auto max-h-[90vh]"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button className="text-blue-600 mb-4" onClick={closeMemoDetails}>
+                  Back
+                </button>
+                <h2 className="text-lg sm:text-xl font-semibold mb-4 text-blue-800 break-words">
+                  {selectedMemo.title}
+                </h2>
+                <p className="text-black break-words">{selectedMemo.description}</p>
+                {imageURL && (
+                  <Image
+                    src={imageURL}
+                    alt={selectedMemo.title}
+                    width={800}
+                    height={520}
+                    className="w-full rounded-lg shadow-lg mt-4"
+                  />
+                )}
+              </div>
+            </div>
+          )}
+
+          {showModal && selectedItem && (
+            <div
+              className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4"
+              onClick={closeItemDetails}
+            >
+              <div
+                className="bg-white p-4 sm:p-6 rounded-lg shadow-lg w-full max-w-2xl overflow-y-auto max-h-[90vh]"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button className="text-blue-600 mb-4" onClick={closeItemDetails}>
+                  Back
+                </button>
+                <h2 className="text-lg sm:text-xl font-semibold mb-4 text-blue-800 break-words">
+                  {selectedItem.title}
+                </h2>
+                <div className="text-black whitespace-pre-line break-words">
+                  {selectedItem.fullContent}
                 </div>
               </div>
             </div>
-
-            {/* Memo Modal */}
-            {selectedMemo && (
-              <div
-                className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
-                onClick={closeMemoDetails}
-              >
-                <div
-                  className="bg-white p-4 sm:p-6 rounded-lg shadow-lg max-w-2xl w-full mx-4"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <button
-                    className="text-blue-600 mb-4"
-                    onClick={closeMemoDetails}
-                  >
-                    Back
-                  </button>
-                  <h2 className="text-lg sm:text-xl font-semibold mb-4 text-blue-800">
-                    {selectedMemo.title}
-                  </h2>
-                  <p className="text-black">{selectedMemo.description}</p>
-                  {imageURL && (
-                    <Image
-                      src={imageURL}
-                      alt={selectedMemo.title}
-                      width={800}
-                      height={520}
-                      className="w-full rounded-lg shadow-lg"
-                    />
-                  )}
-                </div>
-              </div>
-            )}
-
-            {/* Announcement/News Modal */}
-            {showModal && selectedItem && (
-              <div
-                className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
-                onClick={closeItemDetails}
-              >
-                <div
-                  className="bg-white p-4 sm:p-6 rounded-lg shadow-lg max-w-2xl w-full mx-4"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <button
-                    className="text-blue-600 mb-4"
-                    onClick={closeItemDetails}
-                  >
-                    Back
-                  </button>
-                  <h2 className="text-lg sm:text-xl font-semibold mb-4 text-blue-800">
-                    {selectedItem.title}
-                  </h2>
-                  <div className="text-black whitespace-pre-line">
-                    {selectedItem.fullContent}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
+          )}
+        </main>
       </div>
     </SidebarProvider>
   );
-}
+};
