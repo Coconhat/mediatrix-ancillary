@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import NavBar from "../../components/NavBar";
-import AnnouncementCard from '../../components/AnnouncementCard';
+import { AnnouncementCard } from '../../components/AnnouncementCard';
 import Image from "next/image";
 import { DirectorySidebar } from "@/components/directory-sidebar";
 import {
