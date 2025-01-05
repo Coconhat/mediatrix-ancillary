@@ -4,7 +4,7 @@ import React from "react";
 
 export default function Header() {
   return (
-    <div className="bg-blue-900 text-white flex justify-center items-center text-center relative h-[700px] mt-28">
+    <div className="bg-blue-900 text-white flex justify-center items-center text-center relative h-[700px] ">
       <Image
         src="/assets/ancillaryimg.jpg" 
         alt="Header Image"
