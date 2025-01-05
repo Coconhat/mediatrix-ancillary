@@ -26,7 +26,7 @@ export default function Component2() {
         {/* Right Section with Background Image */}
         <div className="w-full lg:w-1/2 h-[400px] lg:h-[600px] relative">
           <Image
-            src="/assets/img3.png"
+            src="/assets/imgcv.png"
             alt="Communication"
             layout="fill" 
             objectFit="cover" 

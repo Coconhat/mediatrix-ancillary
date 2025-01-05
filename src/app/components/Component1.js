@@ -10,7 +10,7 @@ export default function Component1() {
         <div className="w-full lg:w-1/2 h-[300px] sm:h-[400px] lg:h-full flex justify-center items-center p-5">
           <div className="relative w-full max-w-[800px] h-full max-h-[400px] sm:max-h-[520px] bg-white border-8 border-white rounded-xl shadow-lg m-2 overflow-hidden">
             <Image
-              src="/assets/img1.png"
+              src="/assets/img.png"
               alt="Announcements and Memos"
               width={750}
               height={480}
