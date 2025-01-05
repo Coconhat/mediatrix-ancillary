@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import NavBar from "../../components/NavBar";
 import { DirectorySidebar } from "@/components/directory-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { PlusCircle, MoreHorizontal, Menu } from "lucide-react"; // Added Menu icon

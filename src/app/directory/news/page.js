@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import NavBar from "../../components/NavBar";
 import { AnnouncementCard } from '../../components/AnnouncementCard';
 import Image from "next/image";
 import { DirectorySidebar } from "@/components/directory-sidebar";
@@ -167,7 +166,7 @@ export default function DashboardPage() {
         {/* Content Section */}
         <div className="flex-1 flex flex-col items-center w-full px-16 sm:px-8">
           <div className="bg-white min-h-screen w-full max-w-7xl mx-auto">
-            <NavBar />
+       
             <div className="space-y-6 mt-36 w-[1810px]">
               {/* Announcements Section */}
               <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg w-full">

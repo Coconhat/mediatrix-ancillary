@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { DirectorySidebar } from "@/components/directory-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import NavBar from "@/app/components/NavBar";
+
 
 const NotificationItem = ({ title, message, timestamp, type, isRead, onClick, source }) => {
   return (
@@ -140,7 +140,7 @@ export default function NotificationsPage() {
       <div className="flex h-screen">
         <DirectorySidebar />
         <div className="flex-1 overflow-hidden">
-          <NavBar />
+        
           <div className="p-8 mt-28 overflow-y-auto h-[calc(100vh-96px)] w-[1799px]">
             <div className="max-w-6xl mx-auto w-full">
               <h1 className="text-3xl font-bold text-blue-800 mb-8 ml-[-250px]">Notifications</h1>
