@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
 import {
   Breadcrumb,
@@ -15,6 +17,8 @@ import {
 } from "@/components/ui/sidebar";
 
 export default function Page() {
+  const [showInputs, setShowInputs] = useState(false);
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -74,19 +78,47 @@ export default function Page() {
 
           {/* Weekly Revenue Update Section */}
           <div className="rounded-lg bg-white p-6 shadow-sm border border-gray-100">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">
-              Weekly Revenue Update
-            </h3>
-            <div className="flex items-center gap-4">
-              <input
-                type="text"
-                placeholder="Enter this week's revenue"
-                className="flex-1 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors">
-                Update
+            <div className="flex items-center gap-4 mb-4">
+              <h3 className="text-xl font-semibold text-gray-800">
+                Weekly Revenue Update
+              </h3>
+              <button
+                onClick={() => setShowInputs(!showInputs)} 
+                className="text-sm font-semibold text-white bg-blue-800 rounded-lg px-4 py-2 hover:bg-blue-900 transition-colors"
+              >
+                {showInputs ? "Hide Inputs" : "Input revenue/expenses/profit"}
               </button>
             </div>
+
+            {/* Input Fields (Conditionally Rendered) */}
+            {showInputs && (
+              <div className="space-y-4">
+                <div className="flex items-center gap-4">
+                  <input
+                    type="text"
+                    placeholder="Enter this week's revenue"
+                    className="flex-1 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div className="flex items-center gap-4">
+                  <input
+                    type="text"
+                    placeholder="Enter this week's expenses"
+                    className="flex-1 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div className="flex items-center gap-4">
+                  <input
+                    type="text"
+                    placeholder="Enter this week's profit"
+                    className="flex-1 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <button className="bg-blue-800 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors">
+                  Update
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Recent Financial Activity Section */}
