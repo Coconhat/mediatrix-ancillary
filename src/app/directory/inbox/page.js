@@ -4,6 +4,7 @@ import NavBar from "../../components/NavBar";
 import { DirectorySidebar } from "@/components/directory-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { PlusCircle, MoreHorizontal } from "lucide-react";
+import Image from 'next/image'; // Import Image from next/image
 
 export default function Messenger() {
   const [messageText, setMessageText] = useState("");
@@ -139,10 +140,12 @@ export default function Messenger() {
                     }`}
                     onClick={() => setCurrentConversation(convo)}
                   >
-                    <img
+                    <Image
                       src={convo.profilePic}
                       alt={convo.name}
-                      className="w-10 h-10 rounded-full mr-3"
+                      width={40}
+                      height={40}
+                      className="rounded-full mr-3"
                     />
                     <div className="flex flex-col">
                       <span className="font-semibold text-black">{convo.name}</span>
@@ -160,10 +163,12 @@ export default function Messenger() {
               {currentConversation ? (
                 <>
                   <div className="flex items-center mb-4 border-b border-gray-300 pb-4">
-                    <img
+                    <Image
                       src={currentConversation.profilePic}
                       alt={currentConversation.name}
-                      className="w-10 h-10 rounded-full mr-3"
+                      width={40}
+                      height={40}
+                      className="rounded-full mr-3"
                     />
                     <h2 className="text-2xl font-bold text-blue-800">{currentConversation.name}</h2>
                     <div className="ml-auto">
@@ -223,67 +228,47 @@ export default function Messenger() {
         </div>
       </div>
 
-      // User List Modal for New Conversation
-          {showUserList && (
-      <div
-        className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
-        onClick={() => setShowUserList(false)} // Close the modal when clicking outside
-      >
+      {/* User List Modal for New Conversation */}
+      {showUserList && (
         <div
-          className="bg-white p-6 rounded-lg shadow-lg max-w-2xl w-full z-60"
-          onClick={(e) => e.stopPropagation()} // Prevent the click event from closing the modal
+          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+          onClick={() => setShowUserList(false)} // Close the modal when clicking outside
         >
-          <h2 className="text-xl font-semibold mb-4 text-blue-800">Start a New Conversation</h2>
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full p-3 mt-2 border border-gray-300 rounded-lg"
-            placeholder="Search users"
-          />
-          <ul className="space-y-2 mt-2 max-h-60 overflow-y-scroll">
-            {filteredUsers.map((user) => (
-              <li
-                key={user.id}
-                onClick={() => handleCreateNewConversation(user.name)}
-                className="cursor-pointer p-3 hover:bg-gray-200 rounded-lg"
-              >
-                {user.name}
-              </li>
-            ))}
-          </ul>
+          <div
+            className="bg-white p-6 rounded-lg shadow-lg max-w-2xl w-full z-60"
+            onClick={(e) => e.stopPropagation()} // Prevent the click event from closing the modal
+          >
+            <h2 className="text-xl font-bold text-blue-800 mb-4">Select a user to start a conversation</h2>
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search Users..."
+              className="p-2 border border-gray-300 rounded-lg mb-4 w-full"
+            />
+            <div className="space-y-3">
+              {filteredUsers.map((user) => (
+                <div
+                  key={user.id}
+                  className="flex items-center p-3 cursor-pointer hover:bg-gray-200 rounded-lg"
+                  onClick={() => handleCreateNewConversation(user.name)}
+                >
+                  <Image
+                    src="https://via.placeholder.com/40"
+                    alt={user.name}
+                    width={40}
+                    height={40}
+                    className="rounded-full mr-3"
+                  />
+                  <div className="flex flex-col">
+                    <span className="font-semibold text-black">{user.name}</span>
+                    <span className="text-sm text-gray-500">{user.role}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
-    )}
-
-
-// Sidebar for Chat Options
-{showSidebar && (
-  <div
-    className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
-    onClick={closeSidebar} // Close sidebar when clicking the backdrop
-  >
-    <div
-      className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full z-60"
-      onClick={(e) => e.stopPropagation()} // Prevent clicks in the sidebar from closing it
-    >
-      <div className="flex items-center mb-4">
-        <img
-          src={currentConversation?.profilePic}
-          alt={currentConversation?.name}
-          className="w-12 h-12 rounded-full mr-3"
-        />
-        <h2 className="text-lg font-semibold">{currentConversation?.name}</h2>
-      </div>
-      <div className="space-y-3">
-        <button className="text-blue-600 w-full text-left p-2" onClick={closeSidebar}>Chat Info</button>
-        <button className="text-blue-600 w-full text-left p-2" onClick={closeSidebar}>Media & Files</button>
-        <button className="text-red-600 w-full text-left p-2" onClick={closeSidebar}>Report User</button>
-        <button className="text-red-600 w-full text-left p-2" onClick={closeSidebar}>Block User</button>
-      </div>
-    </div>
-  </div>
-
       )}
     </SidebarProvider>
   );
