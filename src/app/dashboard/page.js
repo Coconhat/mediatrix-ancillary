@@ -30,7 +30,7 @@ export default function Page() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F7F8FA] pt-24">
+    <div className="min-h-screen bg-[#F7F8FA] pt-1">
       <Link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" />
       <div className="mt-5">
         <DashboardNav
