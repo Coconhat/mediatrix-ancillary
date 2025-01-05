@@ -74,8 +74,8 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white text-gray-700 px-4 lg:px-6 py-4 font-semibold shadow-md fixed top-0 left-0 w-full z-50">
-      <div className="flex justify-between items-center h-20">
+    <nav className="bg-white text-gray-700 px-4 lg:px-6 py-4 font-semibold shadow-md fixed top-0 left-0 w-full z-50 h-20">
+      <div className="flex justify-between items-center h-full">
         {/* Logo and Hamburger Menu */}
         <div className="flex items-center space-x-4">
           <h1 className="font-bold text-lg lg:text-xl">
@@ -180,8 +180,6 @@ const Navbar = () => {
                 Directory
               </Link>
             </li>
-           
-
             <li>
               <Link
                 href="/edit"

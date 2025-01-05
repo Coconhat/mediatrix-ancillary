@@ -11,5 +11,11 @@ export default function ClientNavbarWrapper() {
     return null;
   }
 
-  return <Navbar />;
+  return (
+    <>
+      <Navbar />
+
+      <div className="pt-20"></div>
+    </>
+  );
 }

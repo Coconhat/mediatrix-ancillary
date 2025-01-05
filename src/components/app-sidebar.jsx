@@ -20,6 +20,7 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
+  SidebarTrigger, // Add this import
 } from "@/components/ui/sidebar";
 
 const data = {
@@ -67,21 +68,26 @@ const data = {
 
 export function AppSidebar({ ...props }) {
   return (
-    <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
-        
-      </SidebarHeader>
+    <>
+      {/* Mobile Toggle Button */}
+      <div className="md:hidden fixed top-4 left-4 z-50">
+        <SidebarTrigger />
+      </div>
 
-      <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
-      </SidebarHeader>
-      <SidebarContent>
-        <NavMain items={data.navMain} />
-      </SidebarContent>
-      <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter>
-      <SidebarRail />
-    </Sidebar>
+      {/* Sidebar */}
+      <Sidebar collapsible="icon" {...props}>
+        <SidebarHeader>
+          <TeamSwitcher teams={data.teams} />
+        </SidebarHeader>
+        <SidebarContent>
+          <NavMain items={data.navMain} />
+         
+        </SidebarContent>
+        <SidebarFooter>
+          <NavUser user={data.user} />
+        </SidebarFooter>
+        <SidebarRail />
+      </Sidebar>
+    </>
   );
 }

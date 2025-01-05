@@ -24,16 +24,43 @@ export function NavMain({ items }) {
       <SidebarGroupLabel>Mediatrix ACUP</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
-          <SidebarMenuItem key={item.title}>
-            <SidebarMenuButton
-              url={item.url} 
-              tooltip={item.title}
-              isActive={item.isActive}
-            >
-              {item.icon && <item.icon />}
-              <span>{item.title}</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
+          <Collapsible
+            key={item.title}
+            asChild
+            defaultOpen={item.isActive}
+            className="group/collapsible"
+          >
+            <SidebarMenuItem>
+              <CollapsibleTrigger asChild>
+                <SidebarMenuButton
+                  url={item.url}
+                  tooltip={item.title}
+                  isActive={item.isActive}
+                >
+                  {item.icon && <item.icon />}
+                  <span>{item.title}</span>
+                  {item.items && (
+                    <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                  )}
+                </SidebarMenuButton>
+              </CollapsibleTrigger>
+              {item.items && (
+                <CollapsibleContent>
+                  <SidebarMenuSub>
+                    {item.items.map((subItem) => (
+                      <SidebarMenuSubItem key={subItem.title}>
+                        <SidebarMenuSubButton asChild>
+                          <Link href={subItem.url}>
+                            <span>{subItem.title}</span>
+                          </Link>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                    ))}
+                  </SidebarMenuSub>
+                </CollapsibleContent>
+              )}
+            </SidebarMenuItem>
+          </Collapsible>
         ))}
       </SidebarMenu>
     </SidebarGroup>
