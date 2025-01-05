@@ -18,6 +18,12 @@ import {
 
 export default function Page() {
   const [showInputs, setShowInputs] = useState(false);
+  const [showModal, setShowModal] = useState(false); 
+
+  const handleUpdate = () => {
+    setShowModal(true); 
+    setTimeout(() => setShowModal(false), 3000); 
+  };
 
   return (
     <SidebarProvider>
@@ -83,7 +89,7 @@ export default function Page() {
                 Weekly Revenue Update
               </h3>
               <button
-                onClick={() => setShowInputs(!showInputs)} 
+                onClick={() => setShowInputs(!showInputs)}
                 className="text-sm font-semibold text-white bg-blue-800 rounded-lg px-4 py-2 hover:bg-blue-900 transition-colors"
               >
                 {showInputs ? "Hide Inputs" : "Input revenue/expenses/profit"}
@@ -114,7 +120,10 @@ export default function Page() {
                     className="flex-1 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
-                <button className="bg-blue-800 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors">
+                <button
+                  onClick={handleUpdate} 
+                  className="bg-blue-800 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+                >
                   Update
                 </button>
               </div>
@@ -146,6 +155,18 @@ export default function Page() {
             </div>
           </div>
         </div>
+
+
+        {showModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+            <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                Success!
+              </h3>
+              <p className="text-gray-600">Updated revenue successfully!</p>
+            </div>
+          </div>
+        )}
       </SidebarInset>
     </SidebarProvider>
   );
