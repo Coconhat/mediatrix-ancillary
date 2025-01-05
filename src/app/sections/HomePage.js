@@ -3,6 +3,7 @@ import Component1 from "../components/Component1";
 import Component2 from "../components/Component2";
 import Component3 from "../components/Component3";
 import Header from "../components/Header";
+import Component4 from "../components/Component4";
 
 const HomePage = () => {
   return (
@@ -20,7 +21,7 @@ const HomePage = () => {
           <Component2 />
         </div>
       </div>
-
+      <Component4 />
       {/* Component 3 Section */}
       <div className="z-30">
         <Component3 />

@@ -16,7 +16,7 @@ export default function Component2() {
             accurate and timely updates.
           </p>
           <Link
-            href="/inbox"
+            href="/directory/inbox"
             className="w-full lg:max-w-[566px] mt-4 px-4 py-2 lg:px-6 lg:py-3 text-white bg-blue-700 hover:bg-blue-800 rounded-lg shadow-md transition duration-200 font-semibold text-base lg:text-lg"
           >
             Go to Inbox
