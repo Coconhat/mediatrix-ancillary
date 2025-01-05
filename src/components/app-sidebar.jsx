@@ -38,18 +38,18 @@ const data = {
   navMain: [
     {
       title: "Overview",
-      url: "/edit", 
+      url: "/edit",
       icon: Home,
       isActive: true,
     },
     {
       title: "Finance",
-      url: "/edit/finance", 
+      url: "/edit/finance",
       icon: DollarSign,
     },
     {
       title: "News & Updates",
-      url: "/edit/news", 
+      url: "/edit/news",
       icon: FileText,
     },
     {
@@ -59,7 +59,7 @@ const data = {
     },
     {
       title: "Settings",
-      url: "#", 
+      url: "#",
       icon: Settings2,
     },
   ],
@@ -68,7 +68,10 @@ const data = {
 export function AppSidebar({ ...props }) {
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>{"Need to for UI purposes lol"}</SidebarHeader>
+      <SidebarHeader>
+        
+      </SidebarHeader>
+
       <SidebarHeader>
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
