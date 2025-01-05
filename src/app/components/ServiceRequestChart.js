@@ -1,10 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PieChart, Pie, Tooltip, ResponsiveContainer, Label } from "recharts";
-import { TrendingUp, TrendingDown, MenuIcon } from "lucide-react"; 
+import { TrendingUp, TrendingDown, MenuIcon } from "lucide-react";
 
-// Function to generate dummy data for a given week
-const generateDummyData = () => {
+// Function to generate dummy data for a given department
+const generateDummyData = (department) => {
   const services = [
     "Laboratory Tests",
     "Radiology",
@@ -13,7 +13,7 @@ const generateDummyData = () => {
   ];
   return services.map((service) => ({
     name: service,
-    value: Math.floor(Math.random() * 500) + 100, // Random requests between 100 and 600
+    value: Math.floor(Math.random() * 500) + 100, // Random value for each service
     fill:
       service === "Laboratory Tests"
         ? "#4a8bfa" // Dark Blue
@@ -25,18 +25,26 @@ const generateDummyData = () => {
   }));
 };
 
-// Predefined dummy data for each week
-const dummyDataByWeek = {
-  "this week": generateDummyData(),
-  "last week": generateDummyData(),
-  "last 2 weeks": generateDummyData(),
-  "last 3 weeks": generateDummyData(),
-  "last month": generateDummyData(),
-};
-
-export default function DonutChart() {
+export default function DonutChart({ department }) {
   const [selectedOption, setSelectedOption] = useState("this week");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [dataByWeek, setDataByWeek] = useState({});
+
+  // Pre-generate data for all weeks when the department changes
+  useEffect(() => {
+    const weeks = [
+      "this week",
+      "last week",
+      "last 2 weeks",
+      "last 3 weeks",
+      "last month",
+    ];
+    const newDataByWeek = {};
+    weeks.forEach((week) => {
+      newDataByWeek[week] = generateDummyData(department);
+    });
+    setDataByWeek(newDataByWeek);
+  }, [department]);
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
@@ -44,11 +52,11 @@ export default function DonutChart() {
   };
 
   // Get the data for the selected week
-  const data = dummyDataByWeek[selectedOption];
+  const data = dataByWeek[selectedOption] || [];
   const total = data.reduce((acc, curr) => acc + curr.value, 0);
 
   // Calculate trending percentage (example logic)
-  const previousWeekData = dummyDataByWeek["last week"];
+  const previousWeekData = dataByWeek["last week"] || [];
   const currentWeekTotal = data.reduce((sum, item) => sum + item.value, 0);
   const previousWeekTotal = previousWeekData.reduce(
     (sum, item) => sum + item.value,
@@ -76,10 +84,7 @@ export default function DonutChart() {
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             className="text-xl focus:outline-none hover:bg-gray-100 rounded-full p-1 transition-colors duration-200"
           >
-           <MenuIcon
-              size={24}
-              className="text-gray-600"
-            />
+            <MenuIcon size={24} className="text-gray-600" />
           </button>
 
           {/* Dropdown Menu */}
@@ -94,7 +99,7 @@ export default function DonutChart() {
                 aria-orientation="vertical"
                 aria-labelledby="options-menu"
               >
-                {Object.keys(dummyDataByWeek).map((option) => (
+                {Object.keys(dataByWeek).map((option) => (
                   <button
                     key={option}
                     onClick={() => handleOptionClick(option)}
@@ -118,10 +123,10 @@ export default function DonutChart() {
               nameKey="name"
               cx="50%"
               cy="50%"
-              innerRadius={60} 
+              innerRadius={60}
               outerRadius={80}
-              paddingAngle={5} 
-              stroke="none" 
+              paddingAngle={5}
+              stroke="none"
             >
               {/* Custom Label for Total and "requests" */}
               <Label
@@ -188,9 +193,9 @@ export default function DonutChart() {
           {Math.abs(trendingPercentage).toFixed(2)}% compared to last week.
         </div>
         <div className="leading-none text-muted-foreground mx-auto">
-          Showing total service requests for {selectedOption}
+          Showing total service requests for {selectedOption} in {department}
         </div>
       </div>
     </div>
-  ); 
+  );
 }

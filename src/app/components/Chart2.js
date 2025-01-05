@@ -1,12 +1,12 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BarChart, Bar, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { MenuIcon, TrendingDown, TrendingUp } from "lucide-react";
 
 const numberFormatter = new Intl.NumberFormat("en-US");
 
-// Function to generate dummy data for a given week
-const generateDummyData = () => {
+// Function to generate dummy data for a given department
+const generateDummyData = (department) => {
   const services = ["X-ray", "Laboratory", "Ultrasound", "Pharmacy", "CT Scan"];
   return services.map((service) => ({
     name: service,
@@ -24,15 +24,6 @@ const generateDummyData = () => {
   }));
 };
 
-// Predefined dummy data for each week
-const dummyDataByWeek = {
-  "this week": generateDummyData(),
-  "last week": generateDummyData(),
-  "last 2 weeks": generateDummyData(),
-  "last 3 weeks": generateDummyData(),
-  "last month": generateDummyData(),
-};
-
 // Function to calculate percentage change
 const calculatePercentageChange = (currentWeek, previousWeek) => {
   const currentTotal = currentWeek.reduce((sum, item) => sum + item.revenue, 0);
@@ -44,10 +35,27 @@ const calculatePercentageChange = (currentWeek, previousWeek) => {
   return ((currentTotal - previousTotal) / previousTotal) * 100;
 };
 
-export default function Chart2() {
+export default function Chart2({ department }) {
   const [selectedOption, setSelectedOption] = useState("this week");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [hoveredBarIndex, setHoveredBarIndex] = useState(null); // Track hovered bar index
+  const [dataByWeek, setDataByWeek] = useState({});
+
+  // Pre-generate data for all weeks when the department changes
+  useEffect(() => {
+    const weeks = [
+      "this week",
+      "last week",
+      "last 2 weeks",
+      "last 3 weeks",
+      "last month",
+    ];
+    const newDataByWeek = {};
+    weeks.forEach((week) => {
+      newDataByWeek[week] = generateDummyData(department);
+    });
+    setDataByWeek(newDataByWeek);
+  }, [department]);
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
@@ -55,10 +63,10 @@ export default function Chart2() {
   };
 
   // Get the data for the selected week
-  const data = dummyDataByWeek[selectedOption];
+  const data = dataByWeek[selectedOption] || [];
 
   // Calculate percentage change
-  const previousWeekData = dummyDataByWeek["last week"];
+  const previousWeekData = dataByWeek["last week"] || [];
   const percentageChange = calculatePercentageChange(data, previousWeekData);
 
   // Determine the color and arrow based on the percentage change
@@ -109,7 +117,7 @@ export default function Chart2() {
                 aria-orientation="vertical"
                 aria-labelledby="options-menu"
               >
-                {Object.keys(dummyDataByWeek).map((option) => (
+                {Object.keys(dataByWeek).map((option) => (
                   <button
                     key={option}
                     onClick={() => handleOptionClick(option)}
