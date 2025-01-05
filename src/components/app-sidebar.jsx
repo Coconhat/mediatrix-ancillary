@@ -25,8 +25,8 @@ import {
 
 const data = {
   user: {
-    name: "Dr. Jane Smith",
-    email: "jane.smith@mediatrix.com.ph",
+    name: "Anne San Juan",
+    email: "mmsanjuan@mediatrix.com.ph",
     avatar: "/avatars/doctor.jpg",
   },
   teams: [
