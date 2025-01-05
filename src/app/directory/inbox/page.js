@@ -170,7 +170,7 @@ export default function Messenger() {
       <div className="flex h-screen w-full">
         <DirectorySidebar />
         <div className="flex-1 bg-gray-50 flex flex-col">
-          <NavBar />
+          
           <div className="container mx-auto flex-1 px-6 py-6 flex">
             {/* Left Sidebar - Contacts/Conversations */}
             <div
