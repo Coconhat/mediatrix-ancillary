@@ -4,6 +4,16 @@ import { DirectorySidebar } from "@/components/directory-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { PlusCircle, MoreHorizontal, Menu } from "lucide-react"; // Added Menu icon
 import Image from "next/image";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Separator } from "@/components/ui/separator";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 export default function Messenger() {
   const [messageText, setMessageText] = useState("");
@@ -169,7 +179,27 @@ export default function Messenger() {
       <div className="flex h-screen w-full">
         <DirectorySidebar />
         <div className="flex-1 bg-gray-50 flex flex-col">
-          
+          {/* Sticky Header with Breadcrumb */}
+          <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-2 bg-white shadow-sm transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+            <div className="flex items-center gap-2 px-4">
+              <SidebarTrigger className="-ml-1" />
+              <Separator orientation="vertical" className="mr-2 h-4" />
+              <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem className="hidden md:block">
+                    <BreadcrumbLink href="#">
+                      ACUP Management
+                    </BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator className="hidden md:block" />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage>Messenger</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
+            </div>
+          </header>
+
           <div className="container mx-auto flex-1 px-6 py-6 flex">
             {/* Left Sidebar - Contacts/Conversations */}
             <div
