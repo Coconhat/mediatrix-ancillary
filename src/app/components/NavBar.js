@@ -117,16 +117,10 @@ const Navbar = () => {
             Dashboard
           </Link>
           <Link
-            href="/news"
+            href="/directory/news"
             className="hover:text-blue-800 transition duration-300"
           >
-            News & Announcements
-          </Link>
-          <Link
-            href="/inbox"
-            className="hover:text-blue-800 transition duration-300"
-          >
-            Inbox
+            Directory
           </Link>
 
           <Link

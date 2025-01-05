@@ -1,10 +1,18 @@
-const AnnouncementCard = ({ title, description }) => {
-    return (
-      <div className="p-4 bg-blue-100 rounded-lg shadow-sm">
-        <h3 className="font-bold text-lg text-blue-900">{title}</h3>
-        <p className="text-gray-700 mt-2">{description}</p>
-      </div>
-    );
-  };
+import React from 'react';
 
-  export default AnnouncementCard;
+export const AnnouncementCard = ({ title, description, isRead, onClick }) => {
+  return (
+    <div
+      className={`relative border p-4 rounded-lg hover:shadow-lg transition-shadow cursor-pointer ${
+        isRead ? 'bg-gray-200' : 'bg-white'
+      }`}
+      onClick={onClick}
+    >
+      {!isRead && (
+        <div className="absolute top-2 right-2 w-3 h-3 bg-red-500 rounded-full"></div>
+      )}
+      <h3 className="text-lg font-semibold text-blue-800">{title}</h3>
+      <p className="text-gray-600">{description}</p>
+    </div>
+  );
+};
