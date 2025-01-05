@@ -1,330 +1,290 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NavBar from "../../components/NavBar";
 import { DirectorySidebar } from "@/components/directory-sidebar";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Separator } from "@/components/ui/separator";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
-import {
-  Home,
-  BarChart,
-  Bell,
-  FileText,
-  Clock,
-  CheckCircle,
-  Users,
-  Settings,
-} from "lucide-react";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { PlusCircle, MoreHorizontal } from "lucide-react";
 
-export default function Inbox() {
-  const [messageSubject, setMessageSubject] = useState("");
-  const [messageBody, setMessageBody] = useState("");
-  const [recipients, setRecipients] = useState([]); // Store multiple recipients
+export default function Messenger() {
+  const [messageText, setMessageText] = useState("");
+  const [currentConversation, setCurrentConversation] = useState(null);
+  const [conversations, setConversations] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [showUserList, setShowUserList] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false); // State for Modal visibility
-  const [selectedMessage, setSelectedMessage] = useState(null); // State for selected message
+  const [showSidebar, setShowSidebar] = useState(false); // New state for sidebar
+  const [sidebarOption, setSidebarOption] = useState(""); // State for the selected sidebar option
 
+  // Sample users
   const users = [
-    { id: 1, name: "Analiza - Head of Ancillary Services", role: "Head" },
-    { id: 2, name: "Bob - Employee", role: "Employee" },
-    { id: 3, name: "Charlie - Employee", role: "Employee" },
+    { id: 1, name: "Alice", role: "Employee" },
+    { id: 2, name: "Bob", role: "Manager" },
+    { id: 3, name: "Charlie", role: "Employee" },
   ];
 
-  const messages = [
-    {
-      id: 1,
-      subject: "New Policy Update",
-      sender: "Alice",
-      timestamp: "2025-01-01 10:30 AM",
-      body: "A new policy regarding remote work has been implemented.",
-      isRead: false,
-    },
-    {
-      id: 2,
-      subject: "System Maintenance",
-      sender: "Bob",
-      timestamp: "2025-01-02 09:00 AM",
-      body: "Scheduled maintenance will occur this weekend.",
-      isRead: false,
-    },
-    {
-      id: 3,
-      subject: "New Policy Update",
-      sender: "Alice",
-      timestamp: "2025-01-01 10:30 AM",
-      body: "A new policy regarding remote work has been implemented.",
-      isRead: true,
-    },
-    {
-      id: 4,
-      subject: "System Maintenance",
-      sender: "Bob",
-      timestamp: "2025-01-02 09:00 AM",
-      body: "Scheduled maintenance will occur this weekend.",
-      isRead: true,
-    },
-    {
-      id: 5,
-      subject: "New Policy Update",
-      sender: "Alice",
-      timestamp: "2025-01-01 10:30 AM",
-      body: "A new policy regarding remote work has been implemented.",
-      isRead: true,
-    },
-    {
-      id: 6,
-      subject: "System Maintenance",
-      sender: "Bob",
-      timestamp: "2025-01-02 09:00 AM",
-      body: "Scheduled maintenance will occur this weekend.",
-      isRead: true,
-    },
-  ];
+  // Get conversations from localStorage
+  useEffect(() => {
+    const storedConversations = JSON.parse(localStorage.getItem("conversations"));
+    if (storedConversations) {
+      setConversations(storedConversations);
+    } else {
+      // Add default conversations
+      const defaultConversations = [
+        {
+          id: 1,
+          name: "Alice",
+          profilePic: "https://via.placeholder.com/40",
+          messages: [
+            { sender: "You", text: "Hi, Alice!", timestamp: new Date().toLocaleString() },
+            { sender: "Alice", text: "Hello, how are you?", timestamp: new Date().toLocaleString() },
+          ],
+        },
+        {
+          id: 2,
+          name: "Bob",
+          profilePic: "https://via.placeholder.com/40",
+          messages: [
+            { sender: "You", text: "Hey Bob, what's up?", timestamp: new Date().toLocaleString() },
+            { sender: "Bob", text: "All good, thanks!", timestamp: new Date().toLocaleString() },
+          ],
+        },
+      ];
+      setConversations(defaultConversations);
+    }
+  }, []);
+
+  // Save conversations to localStorage
+  useEffect(() => {
+    if (conversations.length > 0) {
+      localStorage.setItem("conversations", JSON.stringify(conversations));
+    }
+  }, [conversations]);
 
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleSendMessage = () => {
-    console.log("Message sent:", { subject: messageSubject, body: messageBody, recipients });
-    setIsModalOpen(false);
+    if (messageText.trim() === "") return;
+    const newMessage = { sender: "You", text: messageText, timestamp: new Date().toLocaleString() };
+    const updatedConversations = conversations.map((convo) =>
+      convo.id === currentConversation.id
+        ? { ...convo, messages: [...convo.messages, newMessage] }
+        : convo
+    );
+    setConversations(updatedConversations);
+    setMessageText(""); // Clear message input
+    setCurrentConversation(updatedConversations.find((convo) => convo.id === currentConversation.id)); // Force re-render
   };
 
-  const handleRemoveRecipient = (userName) => {
-    setRecipients(recipients.filter((recipient) => recipient !== userName));
+  const handleCreateNewConversation = (userName) => {
+    const existingConvo = conversations.find((convo) => convo.name === userName);
+    if (existingConvo) {
+      setCurrentConversation(existingConvo);
+      setShowUserList(false);
+      return;
+    }
+
+    const newConvo = {
+      id: conversations.length + 1,
+      name: userName,
+      profilePic: "https://via.placeholder.com/40",
+      messages: [
+        { sender: "You", text: "Hi, how are you?", timestamp: new Date().toLocaleString() },
+        { sender: userName, text: "I'm good, thanks! How about you?", timestamp: new Date().toLocaleString() },
+      ],
+    };
+    const updatedConversations = [...conversations, newConvo];
+    setConversations(updatedConversations);
+    setCurrentConversation(newConvo);
+    setShowUserList(false);
   };
 
-  const openMessageDetails = (message) => {
-    setSelectedMessage(message);
-    // Mark message as read when opened
-    if (!message.isRead) {
-      message.isRead = true;
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSendMessage();
     }
   };
 
-  const closeMessageDetails = () => {
-    setSelectedMessage(null);
+  const handleSidebarOption = (option) => {
+    setSidebarOption(option);
+    setShowSidebar(true);
   };
-
-  const handleDeleteMessage = () => {
-    console.log("Message deleted:", selectedMessage.id);
-    setSelectedMessage(null);
-  };
-
-  const handleReplyMessage = () => {
-    console.log("Replying to message:", selectedMessage.id);
-    setSelectedMessage(null);
-  };
-
-  const handleForwardMessage = () => {
-    console.log("Forwarding message:", selectedMessage.id);
-    setSelectedMessage(null);
-  };
+  
+  const closeSidebar = () => {
+    setShowSidebar(false);
+  }
 
   return (
     <SidebarProvider>
-    <DirectorySidebar />
-    <SidebarInset>
-      
-    <div className="bg-gray-50 min-h-screen pt-20 mt-11">
-      <NavBar />
-      <div className="container mx-auto px-4 py-10">
-        <div className="bg-white p-6 rounded-lg shadow-lg max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold mb-6 text-blue-800">Inbox</h2>
+      <div className="flex h-screen w-full">
+        <DirectorySidebar />
+        <div className="flex-1 bg-gray-50 flex flex-col">
+          <NavBar />
+          <div className="container mx-auto flex-1 px-6 py-6 flex mt-28 w-[2300px]">
+            {/* Left Sidebar - Contacts/Conversations */}
+            <div className="w-1/3 bg-white border-r border-gray-200 p-4 space-y-4">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-bold text-blue-800">Conversations</h2>
+                <div className="flex items-center cursor-pointer" onClick={() => setShowUserList(true)}>
+                  <PlusCircle className="mr-2" />
+                  <span>New Message</span>
+                </div>
+              </div>
+              <div className="space-y-3">
+                {conversations.map((convo) => (
+                  <div
+                    key={convo.id}
+                    className={`flex items-center p-3 cursor-pointer hover:bg-gray-200 rounded-lg ${
+                      convo.id === currentConversation?.id ? "bg-gray-200" : ""
+                    }`}
+                    onClick={() => setCurrentConversation(convo)}
+                  >
+                    <img
+                      src={convo.profilePic}
+                      alt={convo.name}
+                      className="w-10 h-10 rounded-full mr-3"
+                    />
+                    <div className="flex flex-col">
+                      <span className="font-semibold text-black">{convo.name}</span>
+                      <span className="text-sm text-gray-500">
+                        {convo.messages[convo.messages.length - 1]?.text}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
 
-          {/* List of received messages */}
-          <div className="space-y-4">
-            {messages.map((message) => (
-              <div
-  key={message.id}
-  className={`border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow flex items-center justify-between cursor-pointer ${message.isRead ? "bg-gray-200" : "bg-white"} relative`} // Add relative here
-  onClick={() => openMessageDetails(message)}
->
-  <div>
-    <div className="font-semibold text-lg text-black">{message.subject}</div>
-    <div className="text-sm text-gray-600">{message.body}</div>
-    <div className="text-sm text-gray-400 mt-1">{message.timestamp}</div>
-  </div>
-  {/* Red dot for unread messages */}
-  {!message.isRead && (
-    <span className="absolute top-2 right-2 bg-red-500 w-3 h-3 rounded-full"></span>
-  )}
-  <span className="text-gray-500 text-xl font-bold">&gt;</span>
-</div>
-
-            ))}
-          </div>
-
-          {/* Compose Message Button */}
-          <div className="flex justify-end mt-6">
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-blue-700 transition-colors"
-            >
-              New Message
-            </button>
+            {/* Right Side - Chat View */}
+            <div className="flex-1 bg-white p-4 flex flex-col">
+              {currentConversation ? (
+                <>
+                  <div className="flex items-center mb-4 border-b border-gray-300 pb-4">
+                    <img
+                      src={currentConversation.profilePic}
+                      alt={currentConversation.name}
+                      className="w-10 h-10 rounded-full mr-3"
+                    />
+                    <h2 className="text-2xl font-bold text-blue-800">{currentConversation.name}</h2>
+                    <div className="ml-auto">
+                      <MoreHorizontal
+                        className="cursor-pointer"
+                        onClick={() => handleSidebarOption("Chat Info")}
+                      />
+                    </div>
+                  </div>
+                  <div className="flex-1 overflow-y-auto mt-4 space-y-4">
+                    {currentConversation.messages.length > 0 ? (
+                      currentConversation.messages.map((message, index) => (
+                        <div
+                          key={index}
+                          className={`flex ${message.sender === "You" ? "justify-end" : "justify-start"}`}
+                        >
+                          <div
+                            className={`p-3 rounded-lg max-w-xs ${
+                              message.sender === "You" ? "bg-blue-600 text-white" : "bg-gray-200 text-black"
+                            }`}
+                          >
+                            <p>{message.text}</p>
+                            <span className="text-xs text-gray-400">{message.timestamp}</span>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="text-center text-gray-500 mt-20">No messages yet.</div>
+                    )}
+                  </div>
+                  <div className="mt-4 flex items-center">
+                    <div className="cursor-pointer text-blue-600 p-3 mr-4">
+                      <span className="font-semibold">+</span>
+                      <div className="text-sm">Add Attachment</div>
+                    </div>
+                    <input
+                      type="text"
+                      value={messageText}
+                      onChange={(e) => setMessageText(e.target.value)}
+                      onKeyDown={handleKeyPress}
+                      className="flex-1 p-3 border border-gray-300 rounded-lg"
+                      placeholder="Type a message"
+                    />
+                    <button
+                      onClick={handleSendMessage}
+                      className="ml-4 bg-blue-600 text-white p-3 rounded-lg"
+                    >
+                      Send
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <div className="text-center text-gray-500 mt-20">Select a conversation to start chatting.</div>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Modal for Compose New Message */}
-      {isModalOpen && (
+      // User List Modal for New Conversation
+          {showUserList && (
+      <div
+        className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+        onClick={() => setShowUserList(false)} // Close the modal when clicking outside
+      >
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
-          onClick={() => setIsModalOpen(false)}
+          className="bg-white p-6 rounded-lg shadow-lg max-w-2xl w-full z-60"
+          onClick={(e) => e.stopPropagation()} // Prevent the click event from closing the modal
         >
-          <div
-            className="bg-white p-6 rounded-lg shadow-lg max-w-2xl w-full z-60"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h2 className="text-xl font-semibold mb-4 text-blue-800">Compose a Message</h2>
-            <div className="mb-4">
-              <label className="block text-black">Subject</label>
-              <input
-                type="text"
-                value={messageSubject}
-                onChange={(e) => setMessageSubject(e.target.value)}
-                className="w-full p-3 mt-2 border border-gray-300 rounded-lg shadow-sm text-black"
-              />
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-black">To</label>
-              <div className="w-full p-3 mt-2 border border-gray-300 rounded-lg shadow-sm text-black">
-                <div className="flex flex-wrap">
-                  {recipients.map((recipient, index) => (
-                    <span
-                      key={index}
-                      className="bg-blue-100 text-blue-800 p-2 rounded-full mr-2 mb-2"
-                    >
-                      {recipient}
-                      <button
-                        onClick={() => handleRemoveRecipient(recipient)}
-                        className="ml-2 text-red-500"
-                      >
-                        &times;
-                      </button>
-                    </span>
-                  ))}
-                </div>
-
-                <input
-                  type="text"
-                  value={searchTerm}
-                  onClick={() => setShowUserList(true)}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full mt-2 p-2 border border-gray-300 rounded-lg"
-                  placeholder="Search users"
-                />
-                {showUserList && (
-                  <ul className="space-y-2 mt-2 max-h-60 overflow-y-scroll">
-                    {filteredUsers.map((user) => (
-                      <li
-                        key={user.id}
-                        onClick={() => {
-                          if (!recipients.includes(user.name)) {
-                            setRecipients([...recipients, user.name]);
-                          }
-                          setShowUserList(false);
-                        }}
-                        className="cursor-pointer p-3 hover:bg-gray-200 rounded-lg"
-                      >
-                        {user.name}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-black">Message</label>
-              <textarea
-                value={messageBody}
-                onChange={(e) => setMessageBody(e.target.value)}
-                className="w-full p-3 mt-2 border border-gray-300 rounded-lg shadow-sm text-black"
-                rows="4"
-              ></textarea>
-            </div>
-
-            <div className="flex justify-between items-center">
-              <button
-                className="bg-gray-300 text-black py-2 px-6 rounded-lg hover:bg-gray-400"
-                onClick={() => setIsModalOpen(false)}
+          <h2 className="text-xl font-semibold mb-4 text-blue-800">Start a New Conversation</h2>
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full p-3 mt-2 border border-gray-300 rounded-lg"
+            placeholder="Search users"
+          />
+          <ul className="space-y-2 mt-2 max-h-60 overflow-y-scroll">
+            {filteredUsers.map((user) => (
+              <li
+                key={user.id}
+                onClick={() => handleCreateNewConversation(user.name)}
+                className="cursor-pointer p-3 hover:bg-gray-200 rounded-lg"
               >
-                Cancel
-              </button>
-              <button
-                onClick={handleSendMessage}
-                className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700"
-              >
-                Send Message
-              </button>
-            </div>
-          </div>
+                {user.name}
+              </li>
+            ))}
+          </ul>
         </div>
-      )}
+      </div>
+    )}
 
-      {/* Popup for Message Details */}
-      {selectedMessage && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
-          onClick={closeMessageDetails} // Close popup if clicked outside
-        >
-          <div
-            className="bg-white p-6 rounded-lg shadow-lg max-w-2xl w-full z-60"
-            onClick={(e) => e.stopPropagation()} // Prevent popup closing when clicking inside
-          >
-            {/* Back Button */}
-            <button
-              className="text-blue-600 mb-4"
-              onClick={closeMessageDetails} // Close popup
-            >
-              Back
-            </button>
 
-            <h2 className="text-xl font-semibold mb-4 text-black">{selectedMessage.subject}</h2>
-            <p className="text-gray-500 mb-4">From: {selectedMessage.sender}</p>
-            <p className="text-gray-500 mb-4">Sent: {selectedMessage.timestamp}</p>
-            <p className="text-black">{selectedMessage.body}</p>
-
-            <div className="flex justify-between items-center mt-6">
-              <button
-                onClick={handleReplyMessage}
-                className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700"
-              >
-                Reply
-              </button>
-              <button
-                onClick={handleForwardMessage}
-                className="bg-white text-blue-500 border border-blue-500 py-2 px-4 rounded-lg hover:bg-gray-300 hover:text-white hover:border-blue-600"
-              >
-                Forward
-              </button>
-              <button
-                onClick={handleDeleteMessage}
-                className="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+// Sidebar for Chat Options
+{showSidebar && (
+  <div
+    className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+    onClick={closeSidebar} // Close sidebar when clicking the backdrop
+  >
+    <div
+      className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full z-60"
+      onClick={(e) => e.stopPropagation()} // Prevent clicks in the sidebar from closing it
+    >
+      <div className="flex items-center mb-4">
+        <img
+          src={currentConversation?.profilePic}
+          alt={currentConversation?.name}
+          className="w-12 h-12 rounded-full mr-3"
+        />
+        <h2 className="text-lg font-semibold">{currentConversation?.name}</h2>
+      </div>
+      <div className="space-y-3">
+        <button className="text-blue-600 w-full text-left p-2" onClick={closeSidebar}>Chat Info</button>
+        <button className="text-blue-600 w-full text-left p-2" onClick={closeSidebar}>Media & Files</button>
+        <button className="text-red-600 w-full text-left p-2" onClick={closeSidebar}>Report User</button>
+        <button className="text-red-600 w-full text-left p-2" onClick={closeSidebar}>Block User</button>
+      </div>
     </div>
-    </SidebarInset>
+  </div>
+
+      )}
     </SidebarProvider>
   );
 }
