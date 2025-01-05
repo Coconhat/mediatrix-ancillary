@@ -62,7 +62,7 @@ export function DirectorySidebar({ ...props }) {
 
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>{"Need to for UI purposes lol"}</SidebarHeader>
+      
       <SidebarHeader>
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>

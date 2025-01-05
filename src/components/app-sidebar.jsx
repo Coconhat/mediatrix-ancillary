@@ -20,7 +20,7 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-  SidebarTrigger, // Add this import
+  
 } from "@/components/ui/sidebar";
 
 const data = {
@@ -69,10 +69,7 @@ const data = {
 export function AppSidebar({ ...props }) {
   return (
     <>
-      {/* Mobile Toggle Button */}
-      <div className="md:hidden fixed top-4 left-4 z-50">
-        <SidebarTrigger />
-      </div>
+     
 
       {/* Sidebar */}
       <Sidebar collapsible="icon" {...props}>
